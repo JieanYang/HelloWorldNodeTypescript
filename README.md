@@ -10,5 +10,5 @@
 
 ### nodemon, ts-node
 
-- nodemon /build/app.js
+- tsc && node /build/app.js
 - nodemon app.ts
