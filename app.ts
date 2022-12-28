@@ -16,7 +16,7 @@ const port = 3000;
 // });
 
 app.get("/", (req: Request, res: Response, next: NextFunction) => {
-  res.status(200).json("Hello Wordl !");
+  res.status(200).json("Hello World !");
 });
 
 app.listen(port, () => {
