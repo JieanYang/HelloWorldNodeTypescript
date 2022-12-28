@@ -5,6 +5,10 @@
   "repository": "git@github.com:JieanYang/HelloWorldNodeJsAgent.git",
   "author": "Jiean Yang <jiean.yang.freelancer@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch"
+  },
   "dependencies": {
     "express": "^4.18.2"
   },
