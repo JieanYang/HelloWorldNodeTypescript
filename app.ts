@@ -1,3 +1,4 @@
+import { spawn } from "child_process";
 import express, { Request, Response, NextFunction } from "express";
 import schedule from "node-schedule";
 import os from "os";
@@ -52,6 +53,26 @@ app.get("/os", (req: Request, res: Response, next: NextFunction) => {
   console.log("/os results", results);
 
   res.status(200).json({ results });
+});
+
+app.get("/spwan", (req: Request, res: Response, next: NextFunction) => {
+  console.log("hit /spwan");
+  // const ls = spawn("ls", ["-lh", "/usr"]);
+  const ls = spawn("ls", ["-lh"]);
+
+  ls.stdout.on("data", (data) => {
+    console.log(`stdout: ${data}`);
+  });
+
+  ls.stderr.on("data", (data) => {
+    console.error(`stderr: ${data}`);
+  });
+
+  ls.on("close", (code) => {
+    console.log(`child process exited with code ${code}`);
+  });
+
+  res.status(200).json({ results: "OK" });
 });
 
 app.listen(port, () => {
