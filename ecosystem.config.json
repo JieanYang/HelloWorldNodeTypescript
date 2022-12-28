@@ -1,0 +1,9 @@
+{
+  "apps": [
+    {
+      "name": "HelloWorldNodeJsAgent",
+      "script": "ts-node",
+      "args": "app.ts"
+    }
+  ]
+}
