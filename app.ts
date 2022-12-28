@@ -35,10 +35,19 @@ app.get("/os", (req: Request, res: Response, next: NextFunction) => {
   const results = {
     osArch: os.arch(),
     osPlatform: os.platform(),
+    osRelease: os.release(),
     // osContants: os.constants,
+    osUptime: os.uptime() / 60 / 60, // From second to hour
+    osHostname: os.hostname(),
+    osUserInfo: os.userInfo(),
+    osVersion: os.version(),
+    osHomedir: os.homedir(),
+    osTmpdir: os.tmpdir(),
     osCpus,
-    osTotalmem: os.totalmem() * Math.pow(10, -9) + " GB", // bytes to GB
-    osFreemem: os.freemem() * Math.pow(10, -9) + " GB", // bytes to GB
+    osNetworkInterfaces: os.networkInterfaces(),
+    osLoadavg: os.loadavg(),
+    osTotalmem: os.totalmem() * Math.pow(10, -9) + " GB", // Bytes to GB
+    osFreemem: os.freemem() * Math.pow(10, -9) + " GB", // Bytes to GB
   };
   console.log("/os results", results);
 
