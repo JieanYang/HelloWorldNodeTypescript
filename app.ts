@@ -75,6 +75,25 @@ app.get("/spwan", (req: Request, res: Response, next: NextFunction) => {
   res.status(200).json({ results: "OK" });
 });
 
+app.get("/run", (req: Request, res: Response, next: NextFunction) => {
+  console.log("hit /run");
+  const ls = spawn("./2022-12-22-first_script.sh", [], { cwd: "scripts" });
+
+  ls.stdout.on("data", (data) => {
+    console.log(`stdout: ${data}`);
+  });
+
+  ls.stderr.on("data", (data) => {
+    console.error(`stderr: ${data}`);
+  });
+
+  ls.on("close", (code) => {
+    console.log(`child process exited with code ${code}`);
+  });
+
+  res.status(200).json({ results: "OK" });
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
