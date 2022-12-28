@@ -1,4 +1,5 @@
 import express, { Request, Response, NextFunction } from "express";
+import schedule from "node-schedule";
 import os from "os";
 
 // const hostname = "127.0.0.1";
@@ -19,11 +20,7 @@ app.get("/", (req: Request, res: Response, next: NextFunction) => {
   res.status(200).json("Hello World !");
 });
 app.get("/os", (req: Request, res: Response, next: NextFunction) => {
-  let osCpus: os.CpuInfo[] = os.cpus();
-  const osTotalmem = os.totalmem();
-  const osFreemem = os.freemem();
-
-  osCpus = osCpus.map((cpuItem) => {
+  const osCpus: os.CpuInfo[] = os.cpus().map((cpuItem) => {
     return {
       ...cpuItem,
       times: {
@@ -36,9 +33,12 @@ app.get("/os", (req: Request, res: Response, next: NextFunction) => {
   });
 
   const results = {
+    osArch: os.arch(),
+    osPlatform: os.platform(),
+    // osContants: os.constants,
     osCpus,
-    osTotalmem: osTotalmem * Math.pow(10, -9) + " GB", // bytes to GB
-    osFreemem: osFreemem * Math.pow(10, -9) + " GB", // bytes to GB
+    osTotalmem: os.totalmem() * Math.pow(10, -9) + " GB", // bytes to GB
+    osFreemem: os.freemem() * Math.pow(10, -9) + " GB", // bytes to GB
   };
   console.log("/os results", results);
 
@@ -47,4 +47,8 @@ app.get("/os", (req: Request, res: Response, next: NextFunction) => {
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
+});
+
+schedule.scheduleJob("*/15 * * * * *", function () {
+  console.log("running a task every 15 second");
 });
