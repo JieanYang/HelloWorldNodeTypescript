@@ -2,12 +2,13 @@ import { spawn } from "child_process";
 import express, { Request, Response, NextFunction } from "express";
 import schedule from "node-schedule";
 import os from "os";
+import route from "./src/route";
 
 // const hostname = "127.0.0.1";
 const app = express();
 const port = 8080;
 
-// * Use http package
+// ================== Use http package - start ==================
 // const server = http.createServer((req: any, res: any) => {
 //   res.statusCode = 200;
 //   res.setHeader("Content-Type", "text/plain");
@@ -16,10 +17,11 @@ const port = 8080;
 // server.listen(port, hostname, () => {
 //   console.log(`Server running at http://${hostname}:${port}/`);
 // });
+// ================== Use http package - end ==================
 
-app.get("/", (req: Request, res: Response, next: NextFunction) => {
-  res.status(200).json("Hello World !");
-});
+app.use(route);
+
+// ================== Get info about the OS - start ==================
 app.get("/os", (req: Request, res: Response, next: NextFunction) => {
   const osCpus: os.CpuInfo[] = os.cpus().map((cpuItem) => {
     return {
@@ -54,7 +56,9 @@ app.get("/os", (req: Request, res: Response, next: NextFunction) => {
 
   res.status(200).json({ results });
 });
+// ================== Get info about the OS - end ==================
 
+// ================== Run scripts - start ==================
 app.get("/spwan", (req: Request, res: Response, next: NextFunction) => {
   console.log("hit /spwan");
   // const ls = spawn("ls", ["-lh", "/usr"]);
@@ -93,6 +97,7 @@ app.get("/run", (req: Request, res: Response, next: NextFunction) => {
 
   res.status(200).json({ results: "OK" });
 });
+// ================== Run scripts - end ==================
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
