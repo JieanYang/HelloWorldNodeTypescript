@@ -9,8 +9,10 @@ import {
   EC2ClientConfig,
 } from "@aws-sdk/client-ec2";
 import { AwsCredentialIdentity } from "@aws-sdk/types";
+
 import fs from "fs";
 import path from "path";
+import btoa from "btoa";
 
 export const createVM = async (
   req: Request,
@@ -30,7 +32,7 @@ export const createVM = async (
     SubnetId: "subnet-0c8782d18d92c563d",
     MinCount: 1,
     MaxCount: 1,
-    UserData: scriptContent,
+    UserData: btoa(scriptContent), // convert string to base64
   };
 
   const credentialConfig: AwsCredentialIdentity = {
