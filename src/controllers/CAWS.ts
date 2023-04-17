@@ -19,15 +19,15 @@ export const createVM = async (
     ImageId: "ami-02b01316e6e3496d9",
     InstanceType: _InstanceType.t3_nano,
     // keyName: [myKeyPair],
-    SecurityGroupIds: ["sg-903004f8"],
-    SubnetId: "subnet-6e7f829e",
+    SecurityGroupIds: ["sg-0f3299071dcdce83e"],
+    SubnetId: "subnet-0c8782d18d92c563d",
     MinCount: 1,
     MaxCount: 1,
   };
 
   const credentialConfig: AwsCredentialIdentity = {
-    accessKeyId: "",
-    secretAccessKey: "",
+    accessKeyId: process.env.ACCESS_KEY_ID as string,
+    secretAccessKey: process.env.SECRET_ACCESS_KEY as string,
   };
 
   const ec2ClientConfig: EC2ClientConfig = {
