@@ -1,3 +1,6 @@
+import * as dotenv from "dotenv";
+dotenv.config();
+
 import { spawn } from "child_process";
 import express, { Request, Response, NextFunction } from "express";
 import schedule from "node-schedule";
