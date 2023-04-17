@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { home } from "./controllers/Cindex";
+import { home } from "../controllers/Cindex";
 
 const router = Router();
 

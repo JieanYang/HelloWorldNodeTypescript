@@ -2,7 +2,7 @@ import { spawn } from "child_process";
 import express, { Request, Response, NextFunction } from "express";
 import schedule from "node-schedule";
 import os from "os";
-import route from "./src/route";
+import route from "./src/routes/route";
 
 // const hostname = "127.0.0.1";
 const app = express();
