@@ -9,7 +9,11 @@ import {
 } from "@aws-sdk/client-ec2";
 import { AwsCredentialIdentity } from "@aws-sdk/types";
 
-const createVM = async (req: Request, res: Response, next: NextFunction) => {
+export const createVM = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const input: RunInstancesCommandInput = {
     ImageId: "ami-02b01316e6e3496d9",
     InstanceType: _InstanceType.t3_nano,

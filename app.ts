@@ -3,6 +3,7 @@ import express, { Request, Response, NextFunction } from "express";
 import schedule from "node-schedule";
 import os from "os";
 import { RIndex } from "./src/routes/RIndex";
+import { RAWS } from "./src/routes/RAWS";
 
 // const hostname = "127.0.0.1";
 const app = express();
@@ -20,6 +21,7 @@ const port = 8080;
 // ================== Use http package - end ==================
 
 app.use(RIndex);
+app.use("/aws", RAWS);
 
 // ================== Get info about the OS - start ==================
 app.get("/os", (req: Request, res: Response, next: NextFunction) => {
