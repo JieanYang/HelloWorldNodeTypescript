@@ -39,7 +39,5 @@ export const createVM = async (
   const command = new RunInstancesCommand(input);
   const response = await client.send(command);
 
-  console.log("createVM response", response);
-
-  res.status(200).json("Create VM");
+  res.status(200).json(response);
 };
