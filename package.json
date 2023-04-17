@@ -2,7 +2,7 @@
   "name": "hello-world-node-js-agent",
   "version": "1.0.0",
   "main": "build/app.js",
-  "repository": "git@github.com:JieanYang/HelloWorldNodeJsAgent.git",
+  "repository": "git@github.com:JieanYang/HelloWorldNodeTypescript.git",
   "author": "Jiean Yang <jiean.yang.freelancer@gmail.com>",
   "license": "MIT",
   "scripts": {
@@ -10,7 +10,7 @@
     "build:watch": "tsc --watch",
     "start": "nodemon app.ts",
     "startJsNotWatch": "tsc && node ./build/app.js",
-    "startPm2": "pm2 start ecosystem.config.json --only HelloWorldNodeJsAgent --watch",
+    "startPm2": "pm2 start ecosystem.config.json --only HelloWorldNodeTypescript --watch",
     "stopPm2": "pm2 stop ecosystem.config.json",
     "monitPm2": "pm2 monit"
   },

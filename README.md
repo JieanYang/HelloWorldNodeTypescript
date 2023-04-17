@@ -1,4 +1,4 @@
-# HelloWorldNodeJsAgent
+# HelloWorldNodeTypescript
 
 ## packages
 
@@ -17,5 +17,5 @@
 
 - npm install pm2 -g
 - pm2 start ecosystem.config.json --watch
-- pm2 start ecosystem.config.json --only HelloWorldNodeJsAgent --watch
+- pm2 start ecosystem.config.json --only HelloWorldNodeTypescript --watch
 - pm2 stop ecosystem.config.json

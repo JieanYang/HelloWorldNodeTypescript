@@ -5,7 +5,7 @@ import os from "os";
 
 // const hostname = "127.0.0.1";
 const app = express();
-const port = 3000;
+const port = 8080;
 
 // * Use http package
 // const server = http.createServer((req: any, res: any) => {

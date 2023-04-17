@@ -1,7 +1,7 @@
 {
   "apps": [
     {
-      "name": "HelloWorldNodeJsAgent",
+      "name": "HelloWorldNodeTypescript",
       "script": "ts-node",
       "args": "app.ts"
     }
