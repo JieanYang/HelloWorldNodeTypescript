@@ -3,7 +3,7 @@
     {
       "name": "HelloWorldNodeTypescript",
       "script": "ts-node",
-      "args": "app.ts"
+      "args": "server.ts"
     }
   ]
 }

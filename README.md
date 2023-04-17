@@ -14,8 +14,8 @@
 
 `nodemon.json` for `nodemon` and `ts-node`
 
-- tsc && node /build/app.js
-- nodemon app.ts
+- tsc && node /build/server.js
+- nodemon server.ts
 
 ### PM2
 
