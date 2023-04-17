@@ -51,3 +51,16 @@ export const createVM = async (
 
   res.status(200).json(response);
 };
+
+export const getNewCommand = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const scriptContent = fs.readFileSync(
+    path.join(__dirname, "../../scripts/2022-12-22-first_script.sh"),
+    "utf8"
+  );
+
+  res.status(200).json({ result: scriptContent });
+};
