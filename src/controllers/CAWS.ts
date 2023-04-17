@@ -9,12 +9,19 @@ import {
   EC2ClientConfig,
 } from "@aws-sdk/client-ec2";
 import { AwsCredentialIdentity } from "@aws-sdk/types";
+import fs from "fs";
+import path from "path";
 
 export const createVM = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
+  const scriptContent = fs.readFileSync(
+    path.join(__dirname, "../../scripts/setup_linux.sh"),
+    "utf8"
+  );
+
   const input: RunInstancesCommandInput = {
     ImageId: "ami-02b01316e6e3496d9",
     InstanceType: _InstanceType.t3_nano,
@@ -23,6 +30,7 @@ export const createVM = async (
     SubnetId: "subnet-0c8782d18d92c563d",
     MinCount: 1,
     MaxCount: 1,
+    UserData: scriptContent,
   };
 
   const credentialConfig: AwsCredentialIdentity = {
