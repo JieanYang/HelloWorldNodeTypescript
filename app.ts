@@ -2,7 +2,7 @@ import { spawn } from "child_process";
 import express, { Request, Response, NextFunction } from "express";
 import schedule from "node-schedule";
 import os from "os";
-import route from "./src/routes/route";
+import { RIndex } from "./src/routes/RIndex";
 
 // const hostname = "127.0.0.1";
 const app = express();
@@ -19,7 +19,7 @@ const port = 8080;
 // });
 // ================== Use http package - end ==================
 
-app.use(route);
+app.use(RIndex);
 
 // ================== Get info about the OS - start ==================
 app.get("/os", (req: Request, res: Response, next: NextFunction) => {
