@@ -6,6 +6,7 @@ import {
   RunInstancesCommand,
   RunInstancesCommandInput,
   _InstanceType,
+  EC2ClientConfig,
 } from "@aws-sdk/client-ec2";
 import { AwsCredentialIdentity } from "@aws-sdk/types";
 
@@ -24,12 +25,17 @@ export const createVM = async (
     MaxCount: 1,
   };
 
-  const config: AwsCredentialIdentity = {
+  const credentialConfig: AwsCredentialIdentity = {
     accessKeyId: "",
     secretAccessKey: "",
   };
 
-  const client = new EC2Client(config);
+  const ec2ClientConfig: EC2ClientConfig = {
+    credentials: credentialConfig,
+    region: "eu-west-3",
+  };
+
+  const client = new EC2Client(ec2ClientConfig);
   const command = new RunInstancesCommand(input);
   const response = await client.send(command);
 
