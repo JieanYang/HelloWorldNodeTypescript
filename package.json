@@ -15,6 +15,7 @@
     "monitPm2": "pm2 monit"
   },
   "dependencies": {
+    "aws-sdk": "^2.1359.0",
     "express": "^4.18.2",
     "node-schedule": "^2.1.0",
     "pm2": "^5.2.2"
