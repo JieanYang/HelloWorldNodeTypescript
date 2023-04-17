@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { home } from "../controllers/Cindex";
 import { createVM, getNewCommand } from "../controllers/CAWS";
 
 export const RAWS = Router();
