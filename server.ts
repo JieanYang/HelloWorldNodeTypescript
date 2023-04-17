@@ -5,9 +5,30 @@ import os from "os";
 import { RIndex } from "./src/routes/RIndex";
 import { RAWS } from "./src/routes/RAWS";
 
+import swaggerJsDoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
+
 // const hostname = "127.0.0.1";
 const app = express();
 const port = 8080;
+
+const prefix = "/node";
+
+const swaggerOptions = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "APIs HelloWorldNodeTypescript",
+      description: "API HelloWorldNodeTypescript informations",
+      version: "1.0.0",
+    },
+    servers: [{ url: prefix }],
+  },
+  apis: ["./src/routes/**/*.ts"],
+};
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use(`${prefix}/api-docs`, swaggerUi.serve);
+app.use(`${prefix}/api-docs`, swaggerUi.setup(swaggerDocs));
 
 // ================== Use http package - start ==================
 // const server = http.createServer((req: any, res: any) => {
@@ -20,11 +41,11 @@ const port = 8080;
 // });
 // ================== Use http package - end ==================
 
-app.use(RIndex);
-app.use("/aws", RAWS);
+app.use(prefix, RIndex);
+app.use(`${prefix}/aws`, RAWS);
 
 // ================== Get info about the OS - start ==================
-app.get("/os", (req: Request, res: Response, next: NextFunction) => {
+app.get(`${prefix}/os`, (req: Request, res: Response, next: NextFunction) => {
   const osCpus: os.CpuInfo[] = os.cpus().map((cpuItem) => {
     return {
       ...cpuItem,
@@ -61,27 +82,30 @@ app.get("/os", (req: Request, res: Response, next: NextFunction) => {
 // ================== Get info about the OS - end ==================
 
 // ================== Run scripts - start ==================
-app.get("/spwan", (req: Request, res: Response, next: NextFunction) => {
-  console.log("hit /spwan");
-  // const ls = spawn("ls", ["-lh", "/usr"]);
-  const ls = spawn("ls", ["-lh"]);
+app.get(
+  `${prefix}/spwan`,
+  (req: Request, res: Response, next: NextFunction) => {
+    console.log("hit /spwan");
+    // const ls = spawn("ls", ["-lh", "/usr"]);
+    const ls = spawn("ls", ["-lh"]);
 
-  ls.stdout.on("data", (data) => {
-    console.log(`stdout: ${data}`);
-  });
+    ls.stdout.on("data", (data) => {
+      console.log(`stdout: ${data}`);
+    });
 
-  ls.stderr.on("data", (data) => {
-    console.error(`stderr: ${data}`);
-  });
+    ls.stderr.on("data", (data) => {
+      console.error(`stderr: ${data}`);
+    });
 
-  ls.on("close", (code) => {
-    console.log(`child process exited with code ${code}`);
-  });
+    ls.on("close", (code) => {
+      console.log(`child process exited with code ${code}`);
+    });
 
-  res.status(200).json({ results: "OK" });
-});
+    res.status(200).json({ results: "OK" });
+  }
+);
 
-app.get("/run", (req: Request, res: Response, next: NextFunction) => {
+app.get(`${prefix}/run`, (req: Request, res: Response, next: NextFunction) => {
   console.log("hit /run");
   const ls = spawn("./2022-12-22-first_script.sh", [], { cwd: "scripts" });
 
