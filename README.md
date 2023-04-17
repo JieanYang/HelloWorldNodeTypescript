@@ -29,3 +29,7 @@
 ### node-schedule
 
 `node-schedule` for Scheduling tasks
+
+### aws-sdk-version-2
+
+aws-sdk-version-2: https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/
