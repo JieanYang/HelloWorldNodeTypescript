@@ -10,10 +10,14 @@
 
 ### nodemon, ts-node
 
+nodemon.json for nodemon and ts-node
+
 - tsc && node /build/app.js
 - nodemon app.ts
 
 ### PM2
+
+ecosystem.config.json for PM2
 
 - npm install pm2 -g
 - pm2 start ecosystem.config.json --watch
