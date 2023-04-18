@@ -4,5 +4,5 @@ $keyDir = "$env:USERPROFILE\.HelloWorldGoAgent"
 if (-not (Test-Path -Path $keyDir)) {
     New-Item -ItemType Directory -Path $keyDir
 }
-Set-Content -Path "${keyDir}\key.txt" -Value $key
+Set-Content -Path "${keyDir}\PSK_key.txt" -Value $key
 </powershell>

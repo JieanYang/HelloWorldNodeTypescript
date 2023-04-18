@@ -19,12 +19,12 @@ export const createVM = async (
   res: Response,
   next: NextFunction
 ) => {
-  const scriptSetupAgentContent = fs.readFileSync(
-    path.join(__dirname, "../../scripts/setup_linux.sh"),
-    "utf8"
-  );
   const scriptSetupPSKKeyContent = fs.readFileSync(
     path.join(__dirname, "../../scripts/setup_linux_key.sh"),
+    "utf8"
+  );
+  const scriptSetupAgentContent = fs.readFileSync(
+    path.join(__dirname, "../../scripts/setup_linux.sh"),
     "utf8"
   );
 
@@ -36,10 +36,11 @@ export const createVM = async (
     SubnetId: "subnet-0c8782d18d92c563d",
     MinCount: 1,
     MaxCount: 1,
+    KeyName: "awsResearch",
     UserData: btoa(`
-    ${scriptSetupAgentContent}
+    ${scriptSetupPSKKeyContent}
 
-    ${scriptSetupPSKKeyContent.replace("#!/bin/bash", "")}
+    ${scriptSetupAgentContent.replace("#!/bin/bash", "")}
     `), // convert string to base64
   };
 
