@@ -19,8 +19,12 @@ export const createVM = async (
   res: Response,
   next: NextFunction
 ) => {
-  const scriptContent = fs.readFileSync(
+  const scriptSetupAgentContent = fs.readFileSync(
     path.join(__dirname, "../../scripts/setup_linux.sh"),
+    "utf8"
+  );
+  const scriptSetupPSKKeyContent = fs.readFileSync(
+    path.join(__dirname, "../../scripts/setup_linux_key.sh"),
     "utf8"
   );
 
@@ -32,7 +36,11 @@ export const createVM = async (
     SubnetId: "subnet-0c8782d18d92c563d",
     MinCount: 1,
     MaxCount: 1,
-    UserData: btoa(scriptContent), // convert string to base64
+    UserData: btoa(`
+    ${scriptSetupAgentContent}
+
+    ${scriptSetupPSKKeyContent.replace("#!/bin/bash", "")}
+    `), // convert string to base64
   };
 
   const credentialConfig: AwsCredentialIdentity = {
