@@ -7,6 +7,9 @@ Write-Output $key_dir
 if (-not (Test-Path -Path $keyDir)) {
     New-Item -ItemType Directory -Path $keyDir
 }
-Set-Content -Path "${keyDir}\PSK_key.txt" -Value $key
+
+$jsonObj = @{ "key" = "$key" }
+$json = ConvertTo-Json $jsonObj
+Set-Content -Path "${keyDir}\origin_metadata.json" -Value $json
 Write-Output "================ setup_windows_key.ps1 - end ================"
 </powershell>
