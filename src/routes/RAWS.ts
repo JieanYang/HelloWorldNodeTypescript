@@ -12,19 +12,28 @@ export const RAWS = Router();
 /**
  * @openapi
  * /aws/createVM:
- *  get:
- *      description: Get one page by id
- *      tags:
- *          - AWS
- *      responses:
- *          '200':
- *              description: Success
- *          '400':
- *              description: Missing parameters
- *          '500':
- *              description: Error
+ *  post:
+ *     description: Post to create a new VM win/linux
+ *     tags:
+ *         - AWS
+ *     requestBody:
+ *       content:
+ *          application/json:
+ *              schema:
+ *                  type: object
+ *                  properties:
+ *                      os:
+ *                          type: string
+ *                          default: Windows
+ *     responses:
+ *         '200':
+ *             description: Success
+ *         '400':
+ *             description: Missing parameters
+ *         '500':
+ *             description: Error
  */
-RAWS.route("/createVM").get(createVM);
+RAWS.route("/createVM").post(createVM);
 
 /**
  * @openapi

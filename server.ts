@@ -15,6 +15,8 @@ import { RAgent } from "./src/routes/RAgent";
 // const hostname = "127.0.0.1";
 const app = express();
 const port = 8080;
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 const prefix = "/node";
 

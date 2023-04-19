@@ -19,30 +19,58 @@ export const createVM = async (
   res: Response,
   next: NextFunction
 ) => {
-  const scriptSetupPSKKeyContent = fs.readFileSync(
-    path.join(__dirname, "../../scripts/setup_linux_key.sh"),
-    "utf8"
-  );
-  const scriptSetupAgentContent = fs.readFileSync(
-    path.join(__dirname, "../../scripts/setup_linux.sh"),
-    "utf8"
-  );
+  const { os } = req.body;
 
-  const input: RunInstancesCommandInput = {
-    ImageId: "ami-02b01316e6e3496d9",
-    InstanceType: _InstanceType.t3_nano,
-    // keyName: [myKeyPair],
-    SecurityGroupIds: ["sg-0f3299071dcdce83e"],
-    SubnetId: "subnet-0c8782d18d92c563d",
-    MinCount: 1,
-    MaxCount: 1,
-    KeyName: "awsResearch",
-    UserData: btoa(`
-    ${scriptSetupPSKKeyContent}
+  let scriptSetuporiginMetadataContent: string, scriptSetupAgentContent: string;
+  let awsInput: RunInstancesCommandInput | null = null;
 
-    ${scriptSetupAgentContent.replace("#!/bin/bash", "")}
-    `), // convert string to base64
-  };
+  if (os === "Linux") {
+    scriptSetuporiginMetadataContent = fs.readFileSync(
+      path.join(__dirname, "../../scripts/setup_linux_key.sh"),
+      "utf8"
+    );
+    scriptSetupAgentContent = fs.readFileSync(
+      path.join(__dirname, "../../scripts/setup_linux.sh"),
+      "utf8"
+    );
+    awsInput = {
+      ImageId: "ami-02b01316e6e3496d9",
+      InstanceType: _InstanceType.t3_nano,
+      SecurityGroupIds: ["sg-0f3299071dcdce83e"],
+      SubnetId: "subnet-0c8782d18d92c563d",
+      MinCount: 1,
+      MaxCount: 1,
+      KeyName: "awsResearch",
+      UserData: btoa(`
+      ${scriptSetuporiginMetadataContent}
+  
+      ${scriptSetupAgentContent.replace("#!/bin/bash", "")}
+      `), // convert string to base64
+    } as RunInstancesCommandInput;
+  } else if (os === "Windows") {
+    scriptSetuporiginMetadataContent = fs.readFileSync(
+      path.join(__dirname, "../../scripts/setup_windows_key.ps1"),
+      "utf8"
+    );
+    scriptSetupAgentContent = fs.readFileSync(
+      path.join(__dirname, "../../scripts/setup_windows.ps1"),
+      "utf8"
+    );
+    awsInput = {
+      ImageId: "ami-09650503efc8d2335",
+      InstanceType: _InstanceType.t3_nano,
+      SecurityGroupIds: ["sg-0f3299071dcdce83e"],
+      SubnetId: "subnet-0c8782d18d92c563d",
+      MinCount: 1,
+      MaxCount: 1,
+      KeyName: "awsResearch",
+      UserData: btoa(`
+          ${scriptSetuporiginMetadataContent}
+      
+          ${scriptSetupAgentContent.replace("#!/bin/bash", "")}
+          `), // convert string to base64
+    } as RunInstancesCommandInput;
+  }
 
   const credentialConfig: AwsCredentialIdentity = {
     accessKeyId: process.env.ACCESS_KEY_ID as string,
@@ -55,7 +83,7 @@ export const createVM = async (
   };
 
   const client = new EC2Client(ec2ClientConfig);
-  const command = new RunInstancesCommand(input);
+  const command = new RunInstancesCommand(awsInput as RunInstancesCommandInput);
   const response = await client.send(command);
 
   res.status(200).json(response);
