@@ -58,7 +58,7 @@ export const createVM = async (
     );
     awsInput = {
       ImageId: "ami-09650503efc8d2335",
-      InstanceType: _InstanceType.t3_nano,
+      InstanceType: _InstanceType.t2_micro,
       SecurityGroupIds: ["sg-0f3299071dcdce83e"],
       SubnetId: "subnet-0c8782d18d92c563d",
       MinCount: 1,
