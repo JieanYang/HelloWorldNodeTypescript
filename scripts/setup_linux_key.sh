@@ -7,7 +7,7 @@ echo "key_dir:"
 echo $key_dir
 mkdir -p "${key_dir}"
 
-json = "{
+json="{
     \"key\": \"${key}\"
 }"
 echo "${json}" > "${key_dir}/origin_metadata.json"
