@@ -10,6 +10,6 @@ if (-not (Test-Path -Path $keyDir)) {
 
 $jsonObj = @{ "key" = "$key" }
 $json = ConvertTo-Json $jsonObj
-Set-Content -Path "${keyDir}\origin_metadata.json" -Value $json
+Set-Content -Path "${keyDir}\original_metadata.json" -Value $json
 Write-Output "================ setup_windows_key.ps1 - end ================"
 </powershell>
