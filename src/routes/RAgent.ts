@@ -16,10 +16,18 @@ RAgent.route("/receiveHearbeat").get((req, res) => {
 /**
  * @openapi
  * /agent/receivePSKKey:
- *  get:
+ *  post:
  *     description: agent reveive PSK key
  *     tags:
  *         - Agent
+ *     requestBody:
+ *       content:
+ *          application/json:
+ *              schema:
+ *                  type: object
+ *                  properties:
+ *                      key:
+ *                          type: string
  *     responses:
  *         '200':
  *             description: Success
@@ -28,8 +36,9 @@ RAgent.route("/receiveHearbeat").get((req, res) => {
  *         '500':
  *             description: Error
  */
-RAgent.route("/receivePSKKey").get((req, res) => {
-  res.status(200).json("OK");
+RAgent.route("/receivePSKKey").post((req, res) => {
+  const { key } = req.body;
+  res.status(200).json({ results: key });
 });
 
 RAgent.route("/receiveCommandResult").get((req, res) => {
