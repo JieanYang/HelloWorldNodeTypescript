@@ -100,5 +100,18 @@ export const getMockOperationCommand = async (
     "utf8"
   );
 
-  res.status(200).json({ result: scriptContent });
+  res.status(200).json({
+    result: {
+      id: "abcdefg12345687-guid",
+      operationCommand: "LIST_USERS",
+      status: "OPERATION_WAITING", // "OPERATION_IN_PROGRESS" | "OPERATION_COMPLETE" | "OPERATION_FAILED"
+      operationScript: scriptContent,
+      operationResult: {
+        returnCode: null,
+        stdOut: null,
+        stdErr: null,
+      },
+      tryTimes: 0, // max: 3
+    },
+  });
 };
