@@ -14,6 +14,20 @@ import fs from "fs";
 import path from "path";
 import btoa from "btoa";
 
+interface IOperationCommandResult {
+  id: string;
+  vmId: number;
+  operationCommand: string;
+  status: string;
+  operationScript: string;
+  operationResult: {
+    returnCode: number | null;
+    stdOut: string | null;
+    stdErr: string | null;
+  };
+  tryTimes: number;
+}
+
 export const createVM = async (
   req: Request,
   res: Response,
@@ -112,6 +126,15 @@ export const getMockOperationCommand = async (
         stdErr: null,
       },
       tryTimes: 0, // max: 3
-    },
+    } as IOperationCommandResult,
   });
+};
+
+export const receiveOperationCommandResult = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const {} = req.body as { result: IOperationCommandResult };
+  console.log("req.body", req.body);
 };

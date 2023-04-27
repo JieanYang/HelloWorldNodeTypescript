@@ -1,5 +1,9 @@
 import { Router } from "express";
-import { createVM, getMockOperationCommand } from "../controllers/CAWS";
+import {
+  createVM,
+  getMockOperationCommand,
+  receiveOperationCommandResult,
+} from "../controllers/CAWS";
 
 export const RAWS = Router();
 
@@ -51,3 +55,52 @@ RAWS.route("/createVM").post(createVM);
  *              description: Error
  */
 RAWS.route("/getMockOperationCommand").get(getMockOperationCommand);
+
+/**
+ * @openapi
+ * /aws/receiveOperationCommandResult:
+ *  post:
+ *     description: Receive operation command result from agent
+ *     tags:
+ *         - AWS
+ *     requestBody:
+ *       content:
+ *          application/json:
+ *              schema:
+ *                  type: object
+ *                  properties:
+ *                      id:
+ *                          type: string
+ *                          default: abcdefg12345687-guid
+ *                      vmId:
+ *                          type: Integer
+ *                          default: 10
+ *                      operationCommand:
+ *                          type: string
+ *                          default: LIST_USERS
+ *                      status:
+ *                          type: string
+ *                          default: OPERATIONS_WAITING
+ *                      operationResult:
+ *                          type: object
+ *                          properties:
+ *                             returnCode:
+ *                                 type: Integer
+ *                                 default: 200
+ *                             stdOut:
+ *                                type: string
+ *                                default: "Hello world"
+ *                             stdErr:
+ *                                type: string
+ *                                default: ""
+ *     responses:
+ *         '200':
+ *             description: Success
+ *         '400':
+ *             description: Missing parameters
+ *         '500':
+ *             description: Error
+ */
+RAWS.route("/receiveOperationCommandResult").post(
+  receiveOperationCommandResult
+);
