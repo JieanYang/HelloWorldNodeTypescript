@@ -94,8 +94,9 @@ export const getMockOperationCommand = async (
   res: Response,
   next: NextFunction
 ) => {
+  // This line will be the codes to get the script form locale, remote like S3 bucket or payload service in the future
   const scriptContent = fs.readFileSync(
-    path.join(__dirname, "../../scripts/2022-12-22-first_script.sh"),
+    path.join(__dirname, "../../scripts/2023-04-27-hello-world.sh"),
     "utf8"
   );
 
