@@ -137,4 +137,6 @@ export const receiveOperationCommandResult = async (
 ) => {
   const {} = req.body as { result: IOperationCommandResult };
   console.log("req.body", req.body);
+
+  res.status(200).send("OK");
 };
