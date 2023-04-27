@@ -89,7 +89,7 @@ export const createVM = async (
   res.status(200).json(response);
 };
 
-export const getNewCommand = async (
+export const getMockOperationCommand = async (
   req: Request,
   res: Response,
   next: NextFunction

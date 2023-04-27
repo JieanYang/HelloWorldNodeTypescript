@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createVM, getNewCommand } from "../controllers/CAWS";
+import { createVM, getMockOperationCommand } from "../controllers/CAWS";
 
 export const RAWS = Router();
 
@@ -37,7 +37,7 @@ RAWS.route("/createVM").post(createVM);
 
 /**
  * @openapi
- * /aws/getNewCommand:
+ * /aws/getMockOperationCommand:
  *  get:
  *      description: Get new command from backend
  *      tags:
@@ -50,4 +50,4 @@ RAWS.route("/createVM").post(createVM);
  *          '500':
  *              description: Error
  */
-RAWS.route("/getNewCommand").get(getNewCommand);
+RAWS.route("/getMockOperationCommand").get(getMockOperationCommand);
