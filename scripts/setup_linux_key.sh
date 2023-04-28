@@ -1,4 +1,5 @@
 #!/bin/bash
+echo "OS: Linux"
 
 echo "================ setup_linux_key.sh - start ================"
 key=$(sudo openssl rand -hex 16)

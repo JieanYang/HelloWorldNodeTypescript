@@ -1,4 +1,6 @@
 #!/bin/bash
+echo "OS: Linux"
+
 echo "start"
 echo "hello yang"
 echo "end"

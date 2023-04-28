@@ -1,4 +1,5 @@
 #!/bin/bash
+echo "OS: Linux"
 
 echo "================ setup_linux.sh - start ================"
 # echo "start"
