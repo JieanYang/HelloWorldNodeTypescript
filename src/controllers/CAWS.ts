@@ -14,26 +14,77 @@ import fs from "fs";
 import path from "path";
 import btoa from "btoa";
 
+interface IOperationCommandResult {
+  id: string;
+  vmId: number;
+  operationCommand: string;
+  status: string;
+  operationScript: string;
+  operationResult: {
+    returnCode: number | null;
+    stdOut: string | null;
+    stdErr: string | null;
+  };
+  tryTimes: number;
+}
+
 export const createVM = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const scriptContent = fs.readFileSync(
-    path.join(__dirname, "../../scripts/setup_linux.sh"),
-    "utf8"
-  );
+  const { os } = req.body;
 
-  const input: RunInstancesCommandInput = {
-    ImageId: "ami-02b01316e6e3496d9",
-    InstanceType: _InstanceType.t3_nano,
-    // keyName: [myKeyPair],
-    SecurityGroupIds: ["sg-0f3299071dcdce83e"],
-    SubnetId: "subnet-0c8782d18d92c563d",
-    MinCount: 1,
-    MaxCount: 1,
-    UserData: btoa(scriptContent), // convert string to base64
-  };
+  let scriptSetuporiginMetadataContent: string, scriptSetupAgentContent: string;
+  let awsInput: RunInstancesCommandInput | null = null;
+
+  if (os === "Linux") {
+    scriptSetuporiginMetadataContent = fs.readFileSync(
+      path.join(__dirname, "../../scripts/setup_linux_key.sh"),
+      "utf8"
+    );
+    scriptSetupAgentContent = fs.readFileSync(
+      path.join(__dirname, "../../scripts/setup_linux.sh"),
+      "utf8"
+    );
+    awsInput = {
+      ImageId: "ami-02b01316e6e3496d9",
+      InstanceType: _InstanceType.t3_nano,
+      SecurityGroupIds: ["sg-0f3299071dcdce83e"],
+      SubnetId: "subnet-0c8782d18d92c563d",
+      MinCount: 1,
+      MaxCount: 1,
+      KeyName: "awsResearch",
+      UserData: btoa(`
+      ${scriptSetuporiginMetadataContent}
+  
+      ${scriptSetupAgentContent.replace("#!/bin/bash", "")}
+      `), // convert string to base64
+    } as RunInstancesCommandInput;
+  } else if (os === "Windows") {
+    scriptSetuporiginMetadataContent = fs.readFileSync(
+      path.join(__dirname, "../../scripts/setup_windows_key.ps1"),
+      "utf8"
+    );
+    scriptSetupAgentContent = fs.readFileSync(
+      path.join(__dirname, "../../scripts/setup_windows.ps1"),
+      "utf8"
+    );
+    awsInput = {
+      ImageId: "ami-09650503efc8d2335",
+      InstanceType: _InstanceType.t2_micro,
+      SecurityGroupIds: ["sg-0f3299071dcdce83e"],
+      SubnetId: "subnet-0c8782d18d92c563d",
+      MinCount: 1,
+      MaxCount: 1,
+      KeyName: "awsResearch",
+      UserData: btoa(`
+          ${scriptSetuporiginMetadataContent}
+      
+          ${scriptSetupAgentContent.replace("#!/bin/bash", "")}
+          `), // convert string to base64
+    } as RunInstancesCommandInput;
+  }
 
   const credentialConfig: AwsCredentialIdentity = {
     accessKeyId: process.env.ACCESS_KEY_ID as string,
@@ -46,8 +97,47 @@ export const createVM = async (
   };
 
   const client = new EC2Client(ec2ClientConfig);
-  const command = new RunInstancesCommand(input);
+  const command = new RunInstancesCommand(awsInput as RunInstancesCommandInput);
   const response = await client.send(command);
 
   res.status(200).json(response);
+};
+
+export const getMockOperationCommand = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  // This line will be the codes to get the script form locale, remote like S3 bucket or payload service in the future
+  const scriptContent = fs.readFileSync(
+    path.join(__dirname, "../../scripts/2023-04-27-hello-world.sh"), // Run success scripts
+    // path.join(__dirname, "../../scripts/2023-05-02-hello-world-with-error.sh"), // with error scripts
+    "utf8"
+  );
+
+  res.status(200).json({
+    result: {
+      id: "abcdefg12345687-guid",
+      operationCommand: "LIST_USERS",
+      status: "OPERATION_WAITING", // "OPERATION_IN_PROGRESS" | "OPERATION_COMPLETE" | "OPERATION_FAILED"
+      operationScript: scriptContent,
+      operationResult: {
+        returnCode: null,
+        stdOut: null,
+        stdErr: null,
+      },
+      tryTimes: 0, // max: 3
+    } as IOperationCommandResult,
+  });
+};
+
+export const receiveOperationCommandResult = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const {} = req.body as { result: IOperationCommandResult };
+  console.log("req.body", req.body);
+
+  res.status(200).send("OK");
 };

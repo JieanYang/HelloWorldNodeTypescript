@@ -1,6 +1,9 @@
 import { Router } from "express";
-import { home } from "../controllers/Cindex";
-import { createVM } from "../controllers/CAWS";
+import {
+  createVM,
+  getMockOperationCommand,
+  receiveOperationCommandResult,
+} from "../controllers/CAWS";
 
 export const RAWS = Router();
 
@@ -13,8 +16,34 @@ export const RAWS = Router();
 /**
  * @openapi
  * /aws/createVM:
+ *  post:
+ *     description: Post to create a new VM win/linux
+ *     tags:
+ *         - AWS
+ *     requestBody:
+ *       content:
+ *          application/json:
+ *              schema:
+ *                  type: object
+ *                  properties:
+ *                      os:
+ *                          type: string
+ *                          default: Windows
+ *     responses:
+ *         '200':
+ *             description: Success
+ *         '400':
+ *             description: Missing parameters
+ *         '500':
+ *             description: Error
+ */
+RAWS.route("/createVM").post(createVM);
+
+/**
+ * @openapi
+ * /aws/getMockOperationCommand:
  *  get:
- *      description: Get one page by id
+ *      description: Get new command from backend
  *      tags:
  *          - AWS
  *      responses:
@@ -25,6 +54,53 @@ export const RAWS = Router();
  *          '500':
  *              description: Error
  */
+RAWS.route("/getMockOperationCommand").get(getMockOperationCommand);
 
-RAWS.route("/createVM").get(createVM);
-// RAWS.route("/getNewCommand").get(createVM);
+/**
+ * @openapi
+ * /aws/receiveOperationCommandResult:
+ *  post:
+ *     description: Receive operation command result from agent
+ *     tags:
+ *         - AWS
+ *     requestBody:
+ *       content:
+ *          application/json:
+ *              schema:
+ *                  type: object
+ *                  properties:
+ *                      id:
+ *                          type: string
+ *                          default: abcdefg12345687-guid
+ *                      vmId:
+ *                          type: Integer
+ *                          default: 10
+ *                      operationCommand:
+ *                          type: string
+ *                          default: LIST_USERS
+ *                      status:
+ *                          type: string
+ *                          default: OPERATIONS_WAITING
+ *                      operationResult:
+ *                          type: object
+ *                          properties:
+ *                             returnCode:
+ *                                 type: Integer
+ *                                 default: 200
+ *                             stdOut:
+ *                                type: string
+ *                                default: "Hello world"
+ *                             stdErr:
+ *                                type: string
+ *                                default: ""
+ *     responses:
+ *         '200':
+ *             description: Success
+ *         '400':
+ *             description: Missing parameters
+ *         '500':
+ *             description: Error
+ */
+RAWS.route("/receiveOperationCommandResult").post(
+  receiveOperationCommandResult
+);

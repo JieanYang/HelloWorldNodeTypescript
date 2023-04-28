@@ -10,10 +10,13 @@ import { RAWS } from "./src/routes/RAWS";
 
 import swaggerJsDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
+import { RAgent } from "./src/routes/RAgent";
 
 // const hostname = "127.0.0.1";
 const app = express();
 const port = 8080;
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 const prefix = "/node";
 
@@ -46,6 +49,7 @@ app.use(`${prefix}/api-docs`, swaggerUi.setup(swaggerDocs));
 
 app.use(prefix, RIndex);
 app.use(`${prefix}/aws`, RAWS);
+app.use(`${prefix}/agent`, RAgent);
 
 // ================== Get info about the OS - start ==================
 app.get(`${prefix}/os`, (req: Request, res: Response, next: NextFunction) => {

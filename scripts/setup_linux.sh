@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo "================ setup_linux.sh - start ================"
 # echo "start"
 # echo "hello yang"
 # echo "end"
@@ -73,3 +74,4 @@ sudo mkdir $DIR_SUPERVISORD_LOG
 # Register service as daemon
 sudo "${DIR_SUPERVISORD_RESEARCH}/supervisord" service install -c "${DIR_SUPERVISORD_RESEARCH}/supervisord-linux.conf"
 sudo "${DIR_SUPERVISORD_RESEARCH}/supervisord" service start
+echo "================ setup_linux.sh - end ================"

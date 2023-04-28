@@ -1,4 +1,5 @@
 <powershell>
+Write-Output "================ setup_windows.ps1 - start ================"
 Set-ExecutionPolicy -Scope LocalMachine -ExecutionPolicy RemoteSigned -Force
 Get-ExecutionPolicy -List
 
@@ -34,4 +35,5 @@ New-Item 'C:\\supervisord' -Type Directory
 # Register service as daemon
 .\supervisord.exe service install -c C:\Users\Administrator\supervisord-research\supervisord-windows.conf
 .\supervisord.exe service start
+Write-Output "================ setup_windows.ps1 - end ================"
 </powershell>
