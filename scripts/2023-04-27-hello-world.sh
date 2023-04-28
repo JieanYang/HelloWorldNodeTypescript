@@ -1,1 +1,1 @@
-echo "Hello Ansys !"
+echo "Hello Ansys Agent !"

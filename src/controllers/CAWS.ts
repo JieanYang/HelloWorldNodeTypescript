@@ -110,7 +110,8 @@ export const getMockOperationCommand = async (
 ) => {
   // This line will be the codes to get the script form locale, remote like S3 bucket or payload service in the future
   const scriptContent = fs.readFileSync(
-    path.join(__dirname, "../../scripts/2023-04-27-hello-world.sh"),
+    path.join(__dirname, "../../scripts/2023-04-27-hello-world.sh"), // Run success scripts
+    // path.join(__dirname, "../../scripts/2023-05-02-hello-world-with-error.sh"), // with error scripts
     "utf8"
   );
 
