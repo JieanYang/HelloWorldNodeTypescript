@@ -1,4 +1,5 @@
 <powershell>
+Write-Output "OS: Windows"
 Write-Output "================ setup_windows.ps1 - start ================"
 Set-ExecutionPolicy -Scope LocalMachine -ExecutionPolicy RemoteSigned -Force
 Get-ExecutionPolicy -List

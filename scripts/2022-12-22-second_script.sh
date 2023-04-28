@@ -1,4 +1,5 @@
 #!/bin/bash
+echo "OS: Linux"
 echo "start sleep 30s"
 # sleep 5
 # sleep 60
