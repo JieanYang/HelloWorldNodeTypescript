@@ -68,5 +68,5 @@ icacls $AGENT_APP /grant Everyone:F
 New-NetFirewallRule -DisplayName 'Go-application' -Profile @('Domain', 'Public','Private') -Direction Inbound -Action Allow -Protocol TCP -LocalPort @('9001')
 
 Set-Location $OS_SERVICE_MANAGER_APP_DIR
-./install_windows.ps1
+./install_windows.bat
 </powershell>
