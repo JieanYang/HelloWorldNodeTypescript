@@ -1,3 +1,4 @@
+<powershell> # Tag powershell for AWS UserData
 Write-Output "OS: Windows"
 
 Write-Output "HelloWorldGoOsService_setup_windows.ps1"
@@ -66,3 +67,4 @@ icacls $AGENT_APP /grant Everyone:F
 
 Set-Location $OS_SERVICE_MANAGER_APP_DIR
 ./install_windows.ps1
+</powershell>
