@@ -46,7 +46,7 @@ fi
 # Build OS service manager app
 cd $OS_SERVICE_MANAGER_APP_DIR
 echo "Build OS service manager app - HelloWorldGoOsService"
-OS_SERVICE_MANAGER_APP="${OS_SERVICE_MANAGER_APP_DIR}/HelloWorldGoOsService"
+OS_SERVICE_MANAGER_APP="${OS_SERVICE_MANAGER_APP_DIR}/HelloWorldGoOsServiceApp"
 if [ -f "$OS_SERVICE_MANAGER_APP" ]; then
     rm $OS_SERVICE_MANAGER_APP
 fi
@@ -54,7 +54,7 @@ sudo go build -o ${OS_SERVICE_MANAGER_APP} "${OS_SERVICE_MANAGER_APP_DIR}/main.g
 
 # Build helloWorldGoAgent
 echo "Build helloWorldGoAgent"
-AGENT_APP="${AGENT_APP_DIR}/../helloWorldGoAgent"
+AGENT_APP="${AGENT_APP_DIR}/../helloWorldGoAgentApp"
 if [ -f "$AGENT_APP" ]; then
     rm $AGENT_APP
 fi
