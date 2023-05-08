@@ -42,6 +42,7 @@ else
 fi
 
 # Build OS service manager app
+cd $OS_SERVICE_MANAGER_APP_DIR
 echo "Build OS service manager app - HelloWorldGoOsService"
 OS_SERVICE_MANAGER_APP="${OS_SERVICE_MANAGER_APP_DIR}/HelloWorldGoOsService"
 if [ -f "$OS_SERVICE_MANAGER_APP" ]; then
@@ -62,6 +63,7 @@ cd $AGENT_APP_DIR
 sudo go build -o ${AGENT_APP} "${AGENT_APP_DIR}/src/main.go"
 
 # Add +x permission for two binary files
+cd $OS_SERVICE_MANAGER_APP_DIR
 sudo chmod +x ${OS_SERVICE_MANAGER_APP}
 sudo chmod +x ${AGENT_APP}
 
