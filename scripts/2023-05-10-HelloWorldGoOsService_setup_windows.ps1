@@ -53,7 +53,7 @@ go build -o $OS_SERVICE_MANAGER_APP "${OS_SERVICE_MANAGER_APP_DIR}\main.go"
 
 # Build helloWorldGoAgent
 Write-Output "Build helloWorldGoAgent"
-$AGENT_APP = "${AGENT_APP_DIR}..\helloWorldGoAgentApp.exe"
+$AGENT_APP = "${AGENT_APP_DIR}\..\helloWorldGoAgentApp.exe"
 if (Test-Path $AGENT_APP) {
     Remove-Item $AGENT_APP
 }
