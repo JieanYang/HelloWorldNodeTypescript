@@ -45,7 +45,7 @@ if (Test-Path $OS_SERVICE_MANAGER_APP_DIR) {
 # Build OS service manager app
 Set-Location $OS_SERVICE_MANAGER_APP_DIR
 Write-Host "Build OS service manager app - HelloWorldGoOsService"
-$OS_SERVICE_MANAGER_APP = "${OS_SERVICE_MANAGER_APP_DIR}\HelloWorldGoOsServiceApp"
+$OS_SERVICE_MANAGER_APP = "${OS_SERVICE_MANAGER_APP_DIR}\HelloWorldGoOsServiceApp.exe"
 if (Test-Path $OS_SERVICE_MANAGER_APP) {
     Remove-Item $OS_SERVICE_MANAGER_APP
 }
@@ -53,7 +53,7 @@ go build -o $OS_SERVICE_MANAGER_APP "${OS_SERVICE_MANAGER_APP_DIR}\main.go"
 
 # Build helloWorldGoAgent
 Write-Host "Build helloWorldGoAgent"
-$AGENT_APP = "${AGENT_APP_DIR}..\helloWorldGoAgentApp"
+$AGENT_APP = "${AGENT_APP_DIR}..\helloWorldGoAgentApp.exe"
 if (Test-Path $AGENT_APP) {
     Remove-Item $AGENT_APP
 }
