@@ -20,10 +20,12 @@ export GOPATH=/usr/local/go
 export PATH=$PATH:$GOPATH/bin
 echo $PATH
 
-# Pull github
 OS_SERVICE_MANAGER_APP_DIR="$GOPATH/agentOsService"
+AGENT_APP_DIR="$OS_SERVICE_MANAGER_APP_DIR/helloWorldGoAgent"
 echo $OS_SERVICE_MANAGER_APP_DIR
+echo $AGENT_APP_DIR
 
+# Pull github
 if [ -d "$OS_SERVICE_MANAGER_APP_DIR" ]; then
   echo "Folder exists and pull from github in ${OS_SERVICE_MANAGER_APP_DIR}"
   cd $OS_SERVICE_MANAGER_APP_DIR
@@ -51,9 +53,6 @@ fi
 sudo go build -o ${OS_SERVICE_MANAGER_APP} "${OS_SERVICE_MANAGER_APP_DIR}/main.go"
 
 # Build helloWorldGoAgent
-AGENT_APP_DIR="$OS_SERVICE_MANAGER_APP_DIR/helloWorldGoAgent"
-echo $AGENT_APP_DIR
-
 echo "Build helloWorldGoAgent"
 AGENT_APP="${AGENT_APP_DIR}/../helloWorldGoAgent"
 if [ -f "$AGENT_APP" ]; then
@@ -68,4 +67,4 @@ sudo chmod +x ${OS_SERVICE_MANAGER_APP}
 sudo chmod +x ${AGENT_APP}
 
 cd $OS_SERVICE_MANAGER_APP_DIR
-./install.sh
+./install_linux.sh
