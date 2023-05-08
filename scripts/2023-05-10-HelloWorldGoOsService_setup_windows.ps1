@@ -17,34 +17,34 @@ New-Alias -Name git -Value 'C:\Program Files\Git\bin\git.exe'
 New-Alias -Name go -Value 'C:\Program Files\Go\bin\go.exe'
 
 # Set path
-Write-Host $env:PATH
+Write-Output $env:PATH
 $env:GOPATH = "C:\go"
 $env:PATH = $env:PATH + ";" + $env:GOPATH + "\bin"
-Write-Host $env:PATH
+Write-Output $env:PATH
 
 $OS_SERVICE_MANAGER_APP_DIR = "$env:GOPATH\agentOsService"
 $AGENT_APP_DIR = "$OS_SERVICE_MANAGER_APP_DIR\helloWorldGoAgent"
-Write-Host $OS_SERVICE_MANAGER_APP_DIR
-Write-Host $AGENT_APP_DIR
+Write-Output $OS_SERVICE_MANAGER_APP_DIR
+Write-Output $AGENT_APP_DIR
 
 # Pull github
 if (Test-Path $OS_SERVICE_MANAGER_APP_DIR) {
-    Write-Host "Folder exists and pull from github in ${OS_SERVICE_MANAGER_APP_DIR}"
+    Write-Output "Folder exists and pull from github in ${OS_SERVICE_MANAGER_APP_DIR}"
     Set-Location $OS_SERVICE_MANAGER_APP_DIR
     git add .
     git reset --hard HEAD
     git pull
 } else {
-    Write-Host "Clone github repository-start"
+    Write-Output "Clone github repository-start"
     git clone --branch master https://github.com/JieanYang/HelloWorldGoOsService.git $OS_SERVICE_MANAGER_APP_DIR
     Set-Location $OS_SERVICE_MANAGER_APP_DIR
     git submodule update --init --recursive
-    Write-Host "Clone github repository-end"
+    Write-Output "Clone github repository-end"
 }
 
 # Build OS service manager app
 Set-Location $OS_SERVICE_MANAGER_APP_DIR
-Write-Host "Build OS service manager app - HelloWorldGoOsService"
+Write-Output "Build OS service manager app - HelloWorldGoOsService"
 $OS_SERVICE_MANAGER_APP = "${OS_SERVICE_MANAGER_APP_DIR}\HelloWorldGoOsServiceApp.exe"
 if (Test-Path $OS_SERVICE_MANAGER_APP) {
     Remove-Item $OS_SERVICE_MANAGER_APP
@@ -52,7 +52,7 @@ if (Test-Path $OS_SERVICE_MANAGER_APP) {
 go build -o $OS_SERVICE_MANAGER_APP "${OS_SERVICE_MANAGER_APP_DIR}\main.go"
 
 # Build helloWorldGoAgent
-Write-Host "Build helloWorldGoAgent"
+Write-Output "Build helloWorldGoAgent"
 $AGENT_APP = "${AGENT_APP_DIR}..\helloWorldGoAgentApp.exe"
 if (Test-Path $AGENT_APP) {
     Remove-Item $AGENT_APP
