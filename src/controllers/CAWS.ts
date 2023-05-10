@@ -45,6 +45,10 @@ export const createVM = async (
     );
     scriptSetupAgentContent = fs.readFileSync(
       path.join(__dirname, "../../scripts/setup_linux.sh"),
+      // path.join(
+      //   __dirname,
+      //   "../../scripts/2023-05-09-HelloWorldGoOsService_setup_linux.sh"
+      // ),
       "utf8"
     );
     awsInput = {
@@ -68,6 +72,10 @@ export const createVM = async (
     );
     scriptSetupAgentContent = fs.readFileSync(
       path.join(__dirname, "../../scripts/setup_windows.ps1"),
+      // path.join(
+      //   __dirname,
+      //   "../../scripts/2023-05-10-HelloWorldGoOsService_setup_windows.ps1"
+      // ),
       "utf8"
     );
     awsInput = {
@@ -111,10 +119,10 @@ export const getMockOperationCommand = async (
   // This line will be the codes to get the script form locale, remote like S3 bucket or payload service in the future
   const scriptContent = fs.readFileSync(
     // OS - Linux scripts
-    // path.join(__dirname, "../../scripts/2023-04-27-hello-world.sh"), // Run success scripts
+    path.join(__dirname, "../../scripts/2023-04-27-hello-world.sh"), // Run success scripts
     // path.join(__dirname, "../../scripts/2023-05-02-hello-world-with-error.sh"), // with error scripts
     // OS - Windows scripts
-    path.join(__dirname, "../../scripts/2023-04-28-hello-world.ps1"), // Run success scripts
+    // path.join(__dirname, "../../scripts/2023-04-28-hello-world.ps1"), // Run success scripts
     // path.join(__dirname, "../../scripts/2023-05-02-hello-world-with-error.ps1"), // with error scripts
     "utf8"
   );
