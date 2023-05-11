@@ -4,7 +4,7 @@ echo "OS: Linux"
 echo "================ setup_linux_key.sh - start ================"
 # key=$(sudo openssl rand -hex 16)
 key="${PSK_KEY_GENERATED_BY_BACKEND}" # This line will be replaced by backend
-key_dir="${HOME}/.HelloWorldGoAgent"
+key_dir="${HOME}/etc/.helloWorldGoAgent"
 echo "key_dir:"
 echo $key_dir
 mkdir -p "${key_dir}"
