@@ -44,7 +44,7 @@ export const createVM = async (
 
   if (os === "Linux") {
     scriptSetuporiginMetadataContent = fs.readFileSync(
-      path.join(__dirname, "../../scripts/setup_linux_key.sh"),
+      path.join(__dirname, "../../scripts/2023-05-11-setup_linux_key.sh"),
       "utf8"
     );
     scriptSetupAgentContent = fs.readFileSync(
@@ -74,7 +74,7 @@ export const createVM = async (
     } as RunInstancesCommandInput;
   } else if (os === "Windows") {
     scriptSetuporiginMetadataContent = fs.readFileSync(
-      path.join(__dirname, "../../scripts/setup_windows_key.ps1"),
+      path.join(__dirname, "../../scripts/2023-05-11-setup_windows_key.ps1"),
       "utf8"
     );
     scriptSetupAgentContent = fs.readFileSync(
