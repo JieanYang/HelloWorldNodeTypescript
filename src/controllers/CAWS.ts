@@ -13,6 +13,7 @@ import { AwsCredentialIdentity } from "@aws-sdk/types";
 import fs from "fs";
 import path from "path";
 import btoa from "btoa";
+import { randomBytes } from "crypto";
 
 interface IOperationCommandResult {
   id: string;
@@ -38,6 +39,9 @@ export const createVM = async (
   let scriptSetuporiginMetadataContent: string, scriptSetupAgentContent: string;
   let awsInput: RunInstancesCommandInput | null = null;
 
+  const newPSKKeyBuffer = randomBytes(32); // generate 32 bytes of random data
+  const newPSKKeyString = newPSKKeyBuffer.toString("hex"); // convert to hex format
+
   if (os === "Linux") {
     scriptSetuporiginMetadataContent = fs.readFileSync(
       path.join(__dirname, "../../scripts/setup_linux_key.sh"),
@@ -60,7 +64,10 @@ export const createVM = async (
       MaxCount: 1,
       KeyName: "awsResearch",
       UserData: btoa(`
-      ${scriptSetuporiginMetadataContent}
+      ${scriptSetuporiginMetadataContent.replace(
+        "${PSK_KEY_GENERATED_BY_BACKEND}",
+        newPSKKeyString
+      )}
   
       ${scriptSetupAgentContent.replace("#!/bin/bash", "")}
       `), // convert string to base64
@@ -87,7 +94,10 @@ export const createVM = async (
       MaxCount: 1,
       KeyName: "awsResearch",
       UserData: btoa(`
-          ${scriptSetuporiginMetadataContent}
+          ${scriptSetuporiginMetadataContent.replace(
+            "${PSK_KEY_GENERATED_BY_BACKEND}",
+            newPSKKeyString
+          )}
       
           ${scriptSetupAgentContent.replace("#!/bin/bash", "")}
           `), // convert string to base64
