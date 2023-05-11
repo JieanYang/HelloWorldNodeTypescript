@@ -48,11 +48,11 @@ export const createVM = async (
       "utf8"
     );
     scriptSetupAgentContent = fs.readFileSync(
-      path.join(__dirname, "../../scripts/setup_linux.sh"),
-      // path.join(
-      //   __dirname,
-      //   "../../scripts/2023-05-09-HelloWorldGoOsService_setup_linux.sh"
-      // ),
+      // path.join(__dirname, "../../scripts/setup_linux.sh"),
+      path.join(
+        __dirname,
+        "../../scripts/2023-05-09-HelloWorldGoOsService_setup_linux.sh"
+      ),
       "utf8"
     );
     awsInput = {
@@ -78,11 +78,11 @@ export const createVM = async (
       "utf8"
     );
     scriptSetupAgentContent = fs.readFileSync(
-      path.join(__dirname, "../../scripts/setup_windows.ps1"),
-      // path.join(
-      //   __dirname,
-      //   "../../scripts/2023-05-10-HelloWorldGoOsService_setup_windows.ps1"
-      // ),
+      // path.join(__dirname, "../../scripts/setup_windows.ps1"),
+      path.join(
+        __dirname,
+        "../../scripts/2023-05-10-HelloWorldGoOsService_setup_windows.ps1"
+      ),
       "utf8"
     );
     awsInput = {
