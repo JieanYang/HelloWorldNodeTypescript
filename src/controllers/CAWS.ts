@@ -13,6 +13,7 @@ import { AwsCredentialIdentity } from "@aws-sdk/types";
 import fs from "fs";
 import path from "path";
 import btoa from "btoa";
+import { randomBytes } from "crypto";
 
 interface IOperationCommandResult {
   id: string;
@@ -38,13 +39,20 @@ export const createVM = async (
   let scriptSetuporiginMetadataContent: string, scriptSetupAgentContent: string;
   let awsInput: RunInstancesCommandInput | null = null;
 
+  const newPSKKeyBuffer = randomBytes(32); // generate 32 bytes of random data
+  const newPSKKeyString = newPSKKeyBuffer.toString("hex"); // convert to hex format
+
   if (os === "Linux") {
     scriptSetuporiginMetadataContent = fs.readFileSync(
-      path.join(__dirname, "../../scripts/setup_linux_key.sh"),
+      path.join(__dirname, "../../scripts/2023-05-11-setup_linux_key.sh"),
       "utf8"
     );
     scriptSetupAgentContent = fs.readFileSync(
-      path.join(__dirname, "../../scripts/setup_linux.sh"),
+      // path.join(__dirname, "../../scripts/setup_linux.sh"),
+      path.join(
+        __dirname,
+        "../../scripts/2023-05-09-HelloWorldGoOsService_setup_linux.sh"
+      ),
       "utf8"
     );
     awsInput = {
@@ -56,18 +64,25 @@ export const createVM = async (
       MaxCount: 1,
       KeyName: "awsResearch",
       UserData: btoa(`
-      ${scriptSetuporiginMetadataContent}
+      ${scriptSetuporiginMetadataContent.replace(
+        "${PSK_KEY_GENERATED_BY_BACKEND}",
+        newPSKKeyString
+      )}
   
       ${scriptSetupAgentContent.replace("#!/bin/bash", "")}
       `), // convert string to base64
     } as RunInstancesCommandInput;
   } else if (os === "Windows") {
     scriptSetuporiginMetadataContent = fs.readFileSync(
-      path.join(__dirname, "../../scripts/setup_windows_key.ps1"),
+      path.join(__dirname, "../../scripts/2023-05-11-setup_windows_key.ps1"),
       "utf8"
     );
     scriptSetupAgentContent = fs.readFileSync(
-      path.join(__dirname, "../../scripts/setup_windows.ps1"),
+      // path.join(__dirname, "../../scripts/setup_windows.ps1"),
+      path.join(
+        __dirname,
+        "../../scripts/2023-05-10-HelloWorldGoOsService_setup_windows.ps1"
+      ),
       "utf8"
     );
     awsInput = {
@@ -79,7 +94,10 @@ export const createVM = async (
       MaxCount: 1,
       KeyName: "awsResearch",
       UserData: btoa(`
-          ${scriptSetuporiginMetadataContent}
+          ${scriptSetuporiginMetadataContent.replace(
+            "${PSK_KEY_GENERATED_BY_BACKEND}",
+            newPSKKeyString
+          )}
       
           ${scriptSetupAgentContent.replace("#!/bin/bash", "")}
           `), // convert string to base64
@@ -111,10 +129,10 @@ export const getMockOperationCommand = async (
   // This line will be the codes to get the script form locale, remote like S3 bucket or payload service in the future
   const scriptContent = fs.readFileSync(
     // OS - Linux scripts
-    // path.join(__dirname, "../../scripts/2023-04-27-hello-world.sh"), // Run success scripts
+    path.join(__dirname, "../../scripts/2023-04-27-hello-world.sh"), // Run success scripts
     // path.join(__dirname, "../../scripts/2023-05-02-hello-world-with-error.sh"), // with error scripts
     // OS - Windows scripts
-    path.join(__dirname, "../../scripts/2023-04-28-hello-world.ps1"), // Run success scripts
+    // path.join(__dirname, "../../scripts/2023-04-28-hello-world.ps1"), // Run success scripts
     // path.join(__dirname, "../../scripts/2023-05-02-hello-world-with-error.ps1"), // with error scripts
     "utf8"
   );
