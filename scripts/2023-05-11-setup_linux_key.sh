@@ -3,14 +3,14 @@ echo "OS: Linux"
 
 echo "================ setup_linux_key.sh - start ================"
 # key=$(sudo openssl rand -hex 16)
-key="${PSK_KEY_GENERATED_BY_BACKEND}" # This line will be replaced by backend
-key_dir="${HOME}/etc/.helloWorldGoAgent"
-echo "key_dir:"
-echo $key_dir
-mkdir -p "${key_dir}"
+PSK_Key="${PSK_KEY_GENERATED_BY_BACKEND}" # This line will be replaced by backend
+metaDir="${HOME}/etc/.helloWorldGoAgent"
+echo "metaDir:"
+echo $metaDir
+mkdir -p "${metaDir}"
 
 json="{
-    \"key\": \"${key}\"
+    \"PSK_Key\": \"${PSK_Key}\"
 }"
-echo "${json}" > "${key_dir}/original_metadata.json"
+echo "${json}" > "${metaDir}/original_metadata.json"
 echo "================ setup_linux_key.sh - end ================"
