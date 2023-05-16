@@ -3,16 +3,35 @@ echo "OS: Linux"
 
 echo "=== HelloWorldGoOsService_setup_linux.sh - start ==="
 
+# === Amazon Linux - start ===
 # Update pacakges
 sudo yum update -y
 
 # Install git
 sudo yum install git -y
-git version
+git --version
 
 # Install go
 sudo yum install golang -y
 go version
+# === Amazon Linux - end ===
+
+# === Ubuntu 20.04 LST - start ===
+sudo apt update
+
+sudo apt install git -y
+git --version
+
+
+sudo apt remove golang* -y
+sudo wget https://golang.org/dl/go1.17.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf go1.17.linux-amd64.tar.gz
+
+echo "export PATH=$PATH:/usr/local/go/bin" >> ~/.profile
+source ~/.profile
+
+go version
+# === Ubuntu 20.04 LST - start ===
 
 # Set path 
 echo $PATH
@@ -54,7 +73,9 @@ sudo go build -o ${OS_SERVICE_MANAGER_APP} "${OS_SERVICE_MANAGER_APP_DIR}/main.g
 
 # Build helloWorldGoAgent
 echo "Build helloWorldGoAgent"
-AGENT_APP="${AGENT_APP_DIR}/../helloWorldGoAgentApp"
+AGENT_APP="${AGENT_APP_DIR}/src/helloWorldGoAgentApp"
+echo $ $AGENT_APP_DIR
+echo $ $AGENT_APP
 if [ -f "$AGENT_APP" ]; then
     rm $AGENT_APP
 fi
@@ -65,6 +86,9 @@ sudo go build -o ${AGENT_APP} "${AGENT_APP_DIR}/src/main.go"
 cd $OS_SERVICE_MANAGER_APP_DIR
 sudo chmod +x ${OS_SERVICE_MANAGER_APP}
 sudo chmod +x ${AGENT_APP}
+
+# Copy helloWorldGoAgent to OS service manager app folder
+sudo sudo cp ${AGENT_APP} ${OS_SERVICE_MANAGER_APP_DIR}
 
 cd $OS_SERVICE_MANAGER_APP_DIR
 ./install_linux.sh
