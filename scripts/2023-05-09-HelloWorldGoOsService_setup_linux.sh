@@ -3,22 +3,46 @@ echo "OS: Linux"
 
 echo "=== HelloWorldGoOsService_setup_linux.sh - start ==="
 
+# === Amazon Linux - start ===
+echo "=== Amazon Linux - start ==="
 # Update pacakges
 sudo yum update -y
 
 # Install git
 sudo yum install git -y
-git version
+git --version
 
 # Install go
 sudo yum install golang -y
 go version
+echo "=== Amazon Linux - end ==="
+# === Amazon Linux - end ===
 
-# Set path 
+# === Ubuntu 20.04 LST - start ===
+echo "=== Ubuntu 20.04 LST - start ==="
+sudo apt update
+
+sudo apt install git -y
+git --version
+
+
+sudo apt remove golang* -y
+sudo wget https://golang.org/dl/go1.17.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf go1.17.linux-amd64.tar.gz
+
+/usr/local/go/bin/go version
+echo "=== Ubuntu 20.04 LST - end ==="
+# === Ubuntu 20.04 LST - start ===
+
+# === Set path - start ===
+echo "=== Set path - start ==="
 echo $PATH
 export GOPATH=/usr/local/go
 export PATH=$PATH:$GOPATH/bin
 echo $PATH
+go version
+echo "=== Set path - end ==="
+# === Set path - end ===
 
 OS_SERVICE_MANAGER_APP_DIR="$GOPATH/agentOsService"
 AGENT_APP_DIR="$OS_SERVICE_MANAGER_APP_DIR/helloWorldGoAgent"
@@ -50,21 +74,26 @@ OS_SERVICE_MANAGER_APP="${OS_SERVICE_MANAGER_APP_DIR}/HelloWorldGoOsServiceApp"
 if [ -f "$OS_SERVICE_MANAGER_APP" ]; then
     rm $OS_SERVICE_MANAGER_APP
 fi
-sudo go build -o ${OS_SERVICE_MANAGER_APP} "${OS_SERVICE_MANAGER_APP_DIR}/main.go"
+sudo /usr/local/go/bin/go build -o ${OS_SERVICE_MANAGER_APP} "${OS_SERVICE_MANAGER_APP_DIR}/main.go"
 
 # Build helloWorldGoAgent
 echo "Build helloWorldGoAgent"
-AGENT_APP="${AGENT_APP_DIR}/../helloWorldGoAgentApp"
+AGENT_APP="${AGENT_APP_DIR}/src/helloWorldGoAgentApp"
+echo $ $AGENT_APP_DIR
+echo $ $AGENT_APP
 if [ -f "$AGENT_APP" ]; then
     rm $AGENT_APP
 fi
 cd $AGENT_APP_DIR
-sudo go build -o ${AGENT_APP} "${AGENT_APP_DIR}/src/main.go"
+sudo /usr/local/go/bin/go build -o ${AGENT_APP} "${AGENT_APP_DIR}/src/main.go"
 
 # Add +x permission for two binary files
 cd $OS_SERVICE_MANAGER_APP_DIR
 sudo chmod +x ${OS_SERVICE_MANAGER_APP}
 sudo chmod +x ${AGENT_APP}
+
+# Copy helloWorldGoAgent to OS service manager app folder
+sudo sudo cp ${AGENT_APP} ${OS_SERVICE_MANAGER_APP_DIR}
 
 cd $OS_SERVICE_MANAGER_APP_DIR
 ./install_linux.sh
