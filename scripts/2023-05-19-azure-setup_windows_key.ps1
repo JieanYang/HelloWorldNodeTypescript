@@ -1,8 +1,8 @@
 Write-Output "OS: Windows"
 
 Write-Output "================ setup_windows_key.ps1 - start ================"
-$PSK_Key = -join ((48..57) + (65..90) + (97..122) | Get-Random -Count 32 | % {[char]$_})
-# $PSK_Key="PSK_KEY_GENERATED_BY_BACKEND" # This line will be replaced by backend
+# $PSK_Key = -join ((48..57) + (65..90) + (97..122) | Get-Random -Count 32 | % {[char]$_})
+$PSK_Key="PSK_KEY_GENERATED_BY_BACKEND" # This line will be replaced by backend
 # $metaDir="$env:USERPROFILE\AppData\Roaming\.helloWorldGoAgent" # C:\Users\Administrator
 $metaDir="$env:APPDATA\.helloWorldGoAgent" # C:\Users\Administrator\AppData\Roaming
 Write-Output "metaDir:"
