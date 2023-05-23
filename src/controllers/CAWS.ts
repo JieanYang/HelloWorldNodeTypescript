@@ -51,7 +51,7 @@ export const createVM = async (
       // path.join(__dirname, "../../scripts/setup_linux.sh"),
       path.join(
         __dirname,
-        "../../scripts/2023-05-09-HelloWorldGoOsService_setup_linux.sh"
+        "../../scripts/2023-05-15-HelloWorldGoOsService_setup_linux.sh"
       ),
       "utf8"
     );
