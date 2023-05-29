@@ -16,7 +16,7 @@
     "listPm2": "pm2 list"
   },
   "dependencies": {
-    "@aws-sdk/client-ec2": "^2.1137.0",
+    "@aws-sdk/client-ec2": "^3.312.0",
     "btoa": "^1.2.1",
     "crypto": "^1.0.1",
     "dotenv": "^16.0.3",
