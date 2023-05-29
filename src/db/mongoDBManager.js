@@ -2,13 +2,12 @@
 //
 //show collections;
 
-use agentDB;
+// use agentDB;
 //db;
 
-db.createCollection("OPERATION")
+// db.createCollection('OPERATION');
 
-db.getCollection("OPERATION").find({})
-
+// db.getCollection('OPERATION').find({});
 
 //db.OPERATION.insertOne({
 //  title: "Post Title 1",

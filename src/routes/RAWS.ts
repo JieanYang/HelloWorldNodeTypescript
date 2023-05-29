@@ -1,9 +1,5 @@
-import { Router } from "express";
-import {
-  createVM,
-  getMockOperationCommand,
-  receiveOperationCommandResult,
-} from "../controllers/CAWS";
+import { Router } from 'express';
+import { createVM, getMockOperationCommand, receiveOperationCommandResult } from '../controllers/CAWS';
 
 export const RAWS = Router();
 
@@ -37,7 +33,7 @@ export const RAWS = Router();
  *         '500':
  *             description: Error
  */
-RAWS.route("/createVM").post(createVM);
+RAWS.route('/createVM').post(createVM);
 
 /**
  * @openapi
@@ -54,7 +50,7 @@ RAWS.route("/createVM").post(createVM);
  *          '500':
  *              description: Error
  */
-RAWS.route("/getMockOperationCommand").get(getMockOperationCommand);
+RAWS.route('/getMockOperationCommand').get(getMockOperationCommand);
 
 /**
  * @openapi
@@ -101,6 +97,4 @@ RAWS.route("/getMockOperationCommand").get(getMockOperationCommand);
  *         '500':
  *             description: Error
  */
-RAWS.route("/receiveOperationCommandResult").post(
-  receiveOperationCommandResult
-);
+RAWS.route('/receiveOperationCommandResult').post(receiveOperationCommandResult);

@@ -1,16 +1,16 @@
-import * as dotenv from "dotenv";
+import * as dotenv from 'dotenv';
 dotenv.config();
 
-import { spawn } from "child_process";
-import express, { Request, Response, NextFunction } from "express";
-import schedule from "node-schedule";
-import os from "os";
-import { RIndex } from "./src/routes/RIndex";
-import { RAWS } from "./src/routes/RAWS";
+import { spawn } from 'child_process';
+import express, { Request, Response, NextFunction } from 'express';
+import schedule from 'node-schedule';
+import os from 'os';
+import { RIndex } from './src/routes/RIndex';
+import { RAWS } from './src/routes/RAWS';
 
-import swaggerJsDoc from "swagger-jsdoc";
-import swaggerUi from "swagger-ui-express";
-import { RAgent } from "./src/routes/RAgent";
+import swaggerJsDoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
+import { RAgent } from './src/routes/RAgent';
 
 // const hostname = "127.0.0.1";
 const app = express();
@@ -18,19 +18,19 @@ const port = 8080;
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-const prefix = "/node";
+const prefix = '/node';
 
 const swaggerOptions = {
   definition: {
-    openapi: "3.0.0",
+    openapi: '3.0.0',
     info: {
-      title: "APIs HelloWorldNodeTypescript",
-      description: "API HelloWorldNodeTypescript informations",
-      version: "1.0.0",
+      title: 'APIs HelloWorldNodeTypescript',
+      description: 'API HelloWorldNodeTypescript informations',
+      version: '1.0.0',
     },
     servers: [{ url: prefix }],
   },
-  apis: ["./src/routes/**/*.ts"],
+  apis: ['./src/routes/**/*.ts'],
 };
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use(`${prefix}/api-docs`, swaggerUi.serve);
@@ -79,56 +79,53 @@ app.get(`${prefix}/os`, (req: Request, res: Response, next: NextFunction) => {
     osCpus,
     osNetworkInterfaces: os.networkInterfaces(),
     osLoadavg: os.loadavg(),
-    osTotalmem: os.totalmem() * Math.pow(10, -9) + " GB", // Bytes to GB
-    osFreemem: os.freemem() * Math.pow(10, -9) + " GB", // Bytes to GB
+    osTotalmem: os.totalmem() * Math.pow(10, -9) + ' GB', // Bytes to GB
+    osFreemem: os.freemem() * Math.pow(10, -9) + ' GB', // Bytes to GB
   };
-  console.log("/os results", results);
+  console.log('/os results', results);
 
   res.status(200).json({ results });
 });
 // ================== Get info about the OS - end ==================
 
 // ================== Run scripts - start ==================
-app.get(
-  `${prefix}/spwan`,
-  (req: Request, res: Response, next: NextFunction) => {
-    console.log("hit /spwan");
-    // const ls = spawn("ls", ["-lh", "/usr"]);
-    const ls = spawn("ls", ["-lh"]);
+app.get(`${prefix}/spwan`, (req: Request, res: Response, next: NextFunction) => {
+  console.log('hit /spwan');
+  // const ls = spawn("ls", ["-lh", "/usr"]);
+  const ls = spawn('ls', ['-lh']);
 
-    ls.stdout.on("data", (data) => {
-      console.log(`stdout: ${data}`);
-    });
-
-    ls.stderr.on("data", (data) => {
-      console.error(`stderr: ${data}`);
-    });
-
-    ls.on("close", (code) => {
-      console.log(`child process exited with code ${code}`);
-    });
-
-    res.status(200).json({ results: "OK" });
-  }
-);
-
-app.get(`${prefix}/run`, (req: Request, res: Response, next: NextFunction) => {
-  console.log("hit /run");
-  const ls = spawn("./2022-12-22-first_script.sh", [], { cwd: "scripts" });
-
-  ls.stdout.on("data", (data) => {
+  ls.stdout.on('data', (data) => {
     console.log(`stdout: ${data}`);
   });
 
-  ls.stderr.on("data", (data) => {
+  ls.stderr.on('data', (data) => {
     console.error(`stderr: ${data}`);
   });
 
-  ls.on("close", (code) => {
+  ls.on('close', (code) => {
     console.log(`child process exited with code ${code}`);
   });
 
-  res.status(200).json({ results: "OK" });
+  res.status(200).json({ results: 'OK' });
+});
+
+app.get(`${prefix}/run`, (req: Request, res: Response, next: NextFunction) => {
+  console.log('hit /run');
+  const ls = spawn('./2022-12-22-first_script.sh', [], { cwd: 'scripts' });
+
+  ls.stdout.on('data', (data) => {
+    console.log(`stdout: ${data}`);
+  });
+
+  ls.stderr.on('data', (data) => {
+    console.error(`stderr: ${data}`);
+  });
+
+  ls.on('close', (code) => {
+    console.log(`child process exited with code ${code}`);
+  });
+
+  res.status(200).json({ results: 'OK' });
 });
 // ================== Run scripts - end ==================
 
@@ -136,6 +133,6 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
 
-schedule.scheduleJob("*/15 * * * * *", function () {
-  console.log("running a task every 15 second");
+schedule.scheduleJob('*/15 * * * * *', function () {
+  console.log('running a task every 15 second');
 });

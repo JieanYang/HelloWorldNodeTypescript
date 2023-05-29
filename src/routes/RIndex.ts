@@ -1,6 +1,6 @@
-import { Router } from "express";
-import { home } from "../controllers/Cindex";
+import { Router } from 'express';
+import { home } from '../controllers/Cindex';
 
 export const RIndex = Router();
 
-RIndex.route("/").get(home);
+RIndex.route('/').get(home);

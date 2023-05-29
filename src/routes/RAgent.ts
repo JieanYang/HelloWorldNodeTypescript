@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Router } from 'express';
 
 export const RAgent = Router();
 
@@ -9,8 +9,8 @@ export const RAgent = Router();
  *   description: Agent routes
  */
 
-RAgent.route("/receiveHearbeat").get((req, res) => {
-  res.status(200).json("OK");
+RAgent.route('/receiveHearbeat').get((req, res) => {
+  res.status(200).json('OK');
 });
 
 /**
@@ -36,11 +36,11 @@ RAgent.route("/receiveHearbeat").get((req, res) => {
  *         '500':
  *             description: Error
  */
-RAgent.route("/receivePSKKey").post((req, res) => {
+RAgent.route('/receivePSKKey').post((req, res) => {
   const { key } = req.body;
   res.status(200).json({ results: key });
 });
 
-RAgent.route("/receiveCommandResult").get((req, res) => {
-  res.status(200).json("OK");
+RAgent.route('/receiveCommandResult').get((req, res) => {
+  res.status(200).json('OK');
 });
