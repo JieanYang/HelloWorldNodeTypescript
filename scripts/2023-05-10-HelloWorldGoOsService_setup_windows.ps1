@@ -22,7 +22,7 @@ $env:GOPATH = "C:\go"
 $env:PATH = $env:PATH + ";" + $env:GOPATH + "\bin"
 Write-Output $env:PATH
 
-$OS_SERVICE_MANAGER_APP_DIR = "$env:GOPATH\agentOsService"
+$OS_SERVICE_MANAGER_APP_DIR = "$env:GOPATH\ansysCSPAgentManagerService"
 $AGENT_APP_DIR = "$OS_SERVICE_MANAGER_APP_DIR\ansysCSPAgent"
 Write-Output $OS_SERVICE_MANAGER_APP_DIR
 Write-Output $AGENT_APP_DIR

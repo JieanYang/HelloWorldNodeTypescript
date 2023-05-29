@@ -63,7 +63,7 @@ go version
 echo "=== Set path - end ==="
 # === Set path - end ===
 
-OS_SERVICE_MANAGER_APP_DIR="$GOPATH/agentOsService"
+OS_SERVICE_MANAGER_APP_DIR="$GOPATH/ansysCSPAgentManagerService"
 AGENT_APP_DIR="$OS_SERVICE_MANAGER_APP_DIR/ansysCSPAgent"
 echo $OS_SERVICE_MANAGER_APP_DIR
 echo $AGENT_APP_DIR
