@@ -44,10 +44,21 @@ go version
 echo "=== Set path - end ==="
 # === Set path - end ===
 
-OS_SERVICE_MANAGER_APP_DIR="$GOPATH/ansysCSPAgentManagerService"
-AGENT_APP_DIR="$OS_SERVICE_MANAGER_APP_DIR/ansysCSPAgent"
+OS_SERVICE_MANAGER_APP_DIR_NAME="ansysCSPAgentManagerService"
+AGENT_APP_DIR_NAME="ansysCSPAgent"
+
+OS_SERVICE_MANAGER_APP_DIR="$GOPATH/$OS_SERVICE_MANAGER_APP_DIR_NAME"
+AGENT_APP_DIR="$OS_SERVICE_MANAGER_APP_DIR/$AGENT_APP_DIR_NAME"
 echo $OS_SERVICE_MANAGER_APP_DIR
 echo $AGENT_APP_DIR
+
+OS_SERVICE_MANAGER_APP_NAME="ansysCSPAgentManagerServiceApp"
+AGENT_APP_NAME="ansysCSPAgentApp"
+
+OS_SERVICE_MANAGER_APP="${OS_SERVICE_MANAGER_APP_DIR}/$OS_SERVICE_MANAGER_APP_NAME"
+AGENT_APP="${AGENT_APP_DIR}/src/$AGENT_APP_NAME"
+echo $ $OS_SERVICE_MANAGER_APP
+echo $ $AGENT_APP
 
 # Pull github
 if [ -d "$OS_SERVICE_MANAGER_APP_DIR" ]; then
@@ -70,7 +81,6 @@ fi
 # Build OS service manager app
 cd $OS_SERVICE_MANAGER_APP_DIR
 echo "Build OS service manager app - HelloWorldGoOsService"
-OS_SERVICE_MANAGER_APP="${OS_SERVICE_MANAGER_APP_DIR}/HelloWorldGoOsServiceApp"
 if [ -f "$OS_SERVICE_MANAGER_APP" ]; then
     rm $OS_SERVICE_MANAGER_APP
 fi
@@ -78,9 +88,6 @@ sudo /usr/local/go/bin/go build -o ${OS_SERVICE_MANAGER_APP} "${OS_SERVICE_MANAG
 
 # Build ansysCSPAgentApp
 echo "Build ansysCSPAgentApp"
-AGENT_APP="${AGENT_APP_DIR}/src/ansysCSPAgentApp"
-echo $ $AGENT_APP_DIR
-echo $ $AGENT_APP
 if [ -f "$AGENT_APP" ]; then
     rm $AGENT_APP
 fi
