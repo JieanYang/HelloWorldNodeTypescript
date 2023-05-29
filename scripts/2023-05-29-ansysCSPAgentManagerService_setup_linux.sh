@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "OS: Linux"
 
-echo "=== HelloWorldGoOsService_setup_linux.sh - start ==="
+echo "=== 2023-05-29-ansysCSPAgentManagerService_setup_linux.sh - start ==="
 
 # === Amazon Linux - start ===
 echo "=== Amazon Linux - start ==="
@@ -44,6 +44,7 @@ go version
 echo "=== Set path - end ==="
 # === Set path - end ===
 
+# === App path - start ===
 OS_SERVICE_MANAGER_APP_DIR_NAME="ansysCSPAgentManagerService"
 AGENT_APP_DIR_NAME="ansysCSPAgent"
 
@@ -59,6 +60,7 @@ OS_SERVICE_MANAGER_APP="${OS_SERVICE_MANAGER_APP_DIR}/$OS_SERVICE_MANAGER_APP_NA
 AGENT_APP="${AGENT_APP_DIR}/src/$AGENT_APP_NAME"
 echo $ $OS_SERVICE_MANAGER_APP
 echo $ $AGENT_APP
+# === App path - end ===
 
 # Pull github
 if [ -d "$OS_SERVICE_MANAGER_APP_DIR" ]; then
@@ -80,7 +82,7 @@ fi
 
 # Build OS service manager app
 cd $OS_SERVICE_MANAGER_APP_DIR
-echo "Build OS service manager app - HelloWorldGoOsService"
+echo "Build OS service manager app"
 if [ -f "$OS_SERVICE_MANAGER_APP" ]; then
     rm $OS_SERVICE_MANAGER_APP
 fi
@@ -104,3 +106,6 @@ sudo sudo cp ${AGENT_APP} ${OS_SERVICE_MANAGER_APP_DIR}
 
 cd $OS_SERVICE_MANAGER_APP_DIR
 ./install_linux.sh
+
+
+echo "=== 2023-05-29-ansysCSPAgentManagerService_setup_linux.sh - end ==="

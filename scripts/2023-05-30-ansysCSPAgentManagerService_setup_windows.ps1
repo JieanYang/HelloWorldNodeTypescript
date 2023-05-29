@@ -1,7 +1,7 @@
 <powershell> # Tag powershell for AWS UserData
 Write-Output "OS: Windows"
 
-Write-Output "HelloWorldGoOsService_setup_windows.ps1"
+Write-Output "================ 2023-05-30-ansysCSPAgentManagerService_setup_windows.ps1 - start ================"
 Set-ExecutionPolicy -Scope LocalMachine -ExecutionPolicy RemoteSigned -Force
 Get-ExecutionPolicy -List
 
@@ -22,10 +22,23 @@ $env:GOPATH = "C:\go"
 $env:PATH = $env:PATH + ";" + $env:GOPATH + "\bin"
 Write-Output $env:PATH
 
-$OS_SERVICE_MANAGER_APP_DIR = "$env:GOPATH\ansysCSPAgentManagerService"
-$AGENT_APP_DIR = "$OS_SERVICE_MANAGER_APP_DIR\ansysCSPAgent"
+# === App path - start ===
+$OS_SERVICE_MANAGER_APP_DIR_NAME="ansysCSPAgentManagerService"
+$AGENT_APP_DIR_NAME="ansysCSPAgent"
+
+$OS_SERVICE_MANAGER_APP_DIR = "$env:GOPATH\$OS_SERVICE_MANAGER_APP_DIR_NAME"
+$AGENT_APP_DIR = "$OS_SERVICE_MANAGER_APP_DIR\$AGENT_APP_DIR_NAME"
 Write-Output $OS_SERVICE_MANAGER_APP_DIR
 Write-Output $AGENT_APP_DIR
+
+$OS_SERVICE_MANAGER_APP_NAME="ansysCSPAgentManagerServiceApp.exe"
+$AGENT_APP_NAME="ansysCSPAgentApp.exe"
+
+$OS_SERVICE_MANAGER_APP = "${OS_SERVICE_MANAGER_APP_DIR}\$OS_SERVICE_MANAGER_APP_NAME"
+$AGENT_APP = "${AGENT_APP_DIR}\..\$AGENT_APP_NAME"
+Write-Output $OS_SERVICE_MANAGER_APP
+Write-Output $AGENT_APP
+# === App path - end ===
 
 # Pull github
 if (Test-Path $OS_SERVICE_MANAGER_APP_DIR) {
@@ -36,7 +49,7 @@ if (Test-Path $OS_SERVICE_MANAGER_APP_DIR) {
     git pull
 } else {
     Write-Output "Clone github repository-start"
-    git clone --branch master https://github.com/JieanYang/HelloWorldGoOsService.git $OS_SERVICE_MANAGER_APP_DIR
+    git clone --branch dev-ansys https://github.com/JieanYang/HelloWorldGoOsService.git $OS_SERVICE_MANAGER_APP_DIR
     Set-Location $OS_SERVICE_MANAGER_APP_DIR
     git submodule update --init --recursive
     Write-Output "Clone github repository-end"
@@ -44,8 +57,7 @@ if (Test-Path $OS_SERVICE_MANAGER_APP_DIR) {
 
 # Build OS service manager app
 Set-Location $OS_SERVICE_MANAGER_APP_DIR
-Write-Output "Build OS service manager app - HelloWorldGoOsService"
-$OS_SERVICE_MANAGER_APP = "${OS_SERVICE_MANAGER_APP_DIR}\HelloWorldGoOsServiceApp.exe"
+Write-Output "Build OS service manager app"
 if (Test-Path $OS_SERVICE_MANAGER_APP) {
     Remove-Item $OS_SERVICE_MANAGER_APP
 }
@@ -53,7 +65,6 @@ go build -o $OS_SERVICE_MANAGER_APP "${OS_SERVICE_MANAGER_APP_DIR}\main.go"
 
 # Build ansysCSPAgentApp
 Write-Output "Build ansysCSPAgentApp"
-$AGENT_APP = "${AGENT_APP_DIR}\..\ansysCSPAgentApp.exe"
 if (Test-Path $AGENT_APP) {
     Remove-Item $AGENT_APP
 }
@@ -69,4 +80,6 @@ New-NetFirewallRule -DisplayName 'Go-application' -Profile @('Domain', 'Public',
 
 Set-Location $OS_SERVICE_MANAGER_APP_DIR
 ./install_windows.bat
+
+Write-Output "================ 2023-05-30-ansysCSPAgentManagerService_setup_windows.ps1 - start ================"
 </powershell>
