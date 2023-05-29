@@ -72,12 +72,12 @@ export const createVM = async (req: Request, res: Response, next: NextFunction) 
     } as RunInstancesCommandInput;
   } else if (os === 'Windows') {
     scriptSetuporiginMetadataContent = fs.readFileSync(
-      path.join(__dirname, '../../scripts/2023-05-11-setup_windows_key.ps1'),
+      path.join(__dirname, '../../scripts/2023-05-30-ansysCSPAgentManagerService_setup_windows_key.ps1'),
       'utf8'
     );
     scriptSetupAgentContent = fs.readFileSync(
       // path.join(__dirname, "../../scripts/setup_windows.ps1"),
-      path.join(__dirname, '../../scripts/2023-05-10-HelloWorldGoOsService_setup_windows.ps1'),
+      path.join(__dirname, '../../scripts/2023-05-30-ansysCSPAgentManagerService_setup_windows.ps1'),
       'utf8'
     );
     awsInput = {
