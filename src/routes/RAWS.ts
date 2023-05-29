@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createVM, getMockOperationCommand, getS3Bucket, receiveOperationCommandResult } from '../controllers/CAWS';
+import { createVM, getMockOperationCommand, getS3BucketList, receiveOperationCommandResult } from '../controllers/CAWS';
 
 export const RAWS = Router();
 
@@ -101,9 +101,9 @@ RAWS.route('/receiveOperationCommandResult').post(receiveOperationCommandResult)
 
 /**
  * @openapi
- * /aws/getS3Bucket:
+ * /aws/getS3BucketList:
  *  post:
- *     description: getS3Bucket
+ *     description: getS3BucketList
  *     tags:
  *         - AWS
  *     requestBody:
@@ -124,4 +124,4 @@ RAWS.route('/receiveOperationCommandResult').post(receiveOperationCommandResult)
  *             description: Error
  */
 
-RAWS.route('/getS3Bucket').post(getS3Bucket);
+RAWS.route('/getS3BucketList').post(getS3BucketList);

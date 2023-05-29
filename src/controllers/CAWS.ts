@@ -141,7 +141,7 @@ export const receiveOperationCommandResult = async (req: Request, res: Response,
   res.status(200).send('OK');
 };
 
-export const getS3Bucket = async (req: Request, res: Response, next: NextFunction) => {
+export const getS3BucketList = async (req: Request, res: Response, next: NextFunction) => {
   const credentialConfig: AwsCredentialIdentity = {
     accessKeyId: process.env.ACCESS_KEY_ID as string,
     secretAccessKey: process.env.SECRET_ACCESS_KEY as string,
