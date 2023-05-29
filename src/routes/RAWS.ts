@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createVM, getMockOperationCommand, receiveOperationCommandResult } from '../controllers/CAWS';
+import { createVM, getMockOperationCommand, getS3Bucket, receiveOperationCommandResult } from '../controllers/CAWS';
 
 export const RAWS = Router();
 
@@ -98,3 +98,30 @@ RAWS.route('/getMockOperationCommand').get(getMockOperationCommand);
  *             description: Error
  */
 RAWS.route('/receiveOperationCommandResult').post(receiveOperationCommandResult);
+
+/**
+ * @openapi
+ * /aws/getS3Bucket:
+ *  post:
+ *     description: getS3Bucket
+ *     tags:
+ *         - AWS
+ *     requestBody:
+ *       content:
+ *          application/json:
+ *              schema:
+ *                  type: object
+ *                  properties:
+ *                      fileName:
+ *                          type: string
+ *                          default: first_script.sh
+ *     responses:
+ *         '200':
+ *             description: Success
+ *         '400':
+ *             description: Missing parameters
+ *         '500':
+ *             description: Error
+ */
+
+RAWS.route('/getS3Bucket').post(getS3Bucket);

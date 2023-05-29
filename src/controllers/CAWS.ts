@@ -8,6 +8,7 @@ import {
   _InstanceType,
   EC2ClientConfig,
 } from '@aws-sdk/client-ec2';
+import { S3Client, S3ClientConfig, ListBucketsCommand, GetObjectCommand } from '@aws-sdk/client-s3';
 import { AwsCredentialIdentity } from '@aws-sdk/types';
 
 import fs from 'fs';
@@ -141,5 +142,22 @@ export const receiveOperationCommandResult = async (req: Request, res: Response,
 };
 
 export const getS3Bucket = async (req: Request, res: Response, next: NextFunction) => {
-  res.status(200).send('OK');
+  const credentialConfig: AwsCredentialIdentity = {
+    accessKeyId: process.env.ACCESS_KEY_ID as string,
+    secretAccessKey: process.env.SECRET_ACCESS_KEY as string,
+  };
+
+  const s3ClientConfig: S3ClientConfig = {
+    credentials: credentialConfig,
+  };
+
+  const client = new S3Client(s3ClientConfig);
+
+  const command = new ListBucketsCommand({});
+
+  const response = await client.send(command);
+
+  console.log('response', response);
+
+  res.status(200).send({ Results: response });
 };
