@@ -1,12 +1,24 @@
 import { Router } from 'express';
-import { createVM, getMockOperationCommand, getS3BucketList, receiveOperationCommandResult } from '../controllers/CAWS';
+import {
+  createVM,
+  getMockOperationCommand,
+  getS3BucketList,
+  getS3BucketObjectSignedUrl,
+  receiveOperationCommandResult,
+} from '../controllers/CAWS';
 
 export const RAWS = Router();
 
 /**
  * @openapi
  * tags:
- *   name: AWS
+ *   name: AWS EC2
+ *   description: AWS routes
+ */
+/**
+ * @openapi
+ * tags:
+ *   name: AWS S3
  *   description: AWS routes
  */
 /**
@@ -15,7 +27,7 @@ export const RAWS = Router();
  *  post:
  *     description: Post to create a new VM win/linux
  *     tags:
- *         - AWS
+ *         - AWS EC2
  *     requestBody:
  *       content:
  *          application/json:
@@ -37,58 +49,11 @@ RAWS.route('/createVM').post(createVM);
 
 /**
  * @openapi
- * /aws/getMockOperationCommand:
+ * /aws/getS3BucketList:
  *  get:
- *      description: Get new command from backend
- *      tags:
- *          - AWS
- *      responses:
- *          '200':
- *              description: Success
- *          '400':
- *              description: Missing parameters
- *          '500':
- *              description: Error
- */
-RAWS.route('/getMockOperationCommand').get(getMockOperationCommand);
-
-/**
- * @openapi
- * /aws/receiveOperationCommandResult:
- *  post:
- *     description: Receive operation command result from agent
+ *     description: getS3BucketList
  *     tags:
- *         - AWS
- *     requestBody:
- *       content:
- *          application/json:
- *              schema:
- *                  type: object
- *                  properties:
- *                      id:
- *                          type: string
- *                          default: abcdefg12345687-guid
- *                      vmId:
- *                          type: Integer
- *                          default: 10
- *                      operationCommand:
- *                          type: string
- *                          default: LIST_USERS
- *                      status:
- *                          type: string
- *                          default: OPERATIONS_WAITING
- *                      operationResult:
- *                          type: object
- *                          properties:
- *                             returnCode:
- *                                 type: Integer
- *                                 default: 200
- *                             stdOut:
- *                                type: string
- *                                default: "Hello world"
- *                             stdErr:
- *                                type: string
- *                                default: ""
+ *         - AWS S3
  *     responses:
  *         '200':
  *             description: Success
@@ -97,15 +62,16 @@ RAWS.route('/getMockOperationCommand').get(getMockOperationCommand);
  *         '500':
  *             description: Error
  */
-RAWS.route('/receiveOperationCommandResult').post(receiveOperationCommandResult);
+
+RAWS.route('/getS3BucketList').get(getS3BucketList);
 
 /**
  * @openapi
- * /aws/getS3BucketList:
+ * /aws/getS3BucketObjectSignedUrl:
  *  post:
- *     description: getS3BucketList
+ *     description: getS3BucketObjectSignedUrl
  *     tags:
- *         - AWS
+ *         - AWS S3
  *     requestBody:
  *       content:
  *          application/json:
@@ -124,4 +90,4 @@ RAWS.route('/receiveOperationCommandResult').post(receiveOperationCommandResult)
  *             description: Error
  */
 
-RAWS.route('/getS3BucketList').post(getS3BucketList);
+RAWS.route('/getS3BucketObjectSignedUrl').post(getS3BucketObjectSignedUrl);

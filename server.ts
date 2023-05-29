@@ -10,7 +10,7 @@ import { RAWS } from './src/routes/RAWS';
 
 import swaggerJsDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
-import { RAgent } from './src/routes/RAgent';
+import { RBackend } from './src/routes/RBackend';
 
 // const hostname = "127.0.0.1";
 const app = express();
@@ -49,7 +49,7 @@ app.use(`${prefix}/api-docs`, swaggerUi.setup(swaggerDocs));
 
 app.use(prefix, RIndex);
 app.use(`${prefix}/aws`, RAWS);
-app.use(`${prefix}/agent`, RAgent);
+app.use(`${prefix}/backend`, RBackend);
 
 // ================== Get info about the OS - start ==================
 app.get(`${prefix}/os`, (req: Request, res: Response, next: NextFunction) => {
