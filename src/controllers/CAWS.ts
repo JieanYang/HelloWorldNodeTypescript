@@ -48,12 +48,12 @@ export const createVM = async (req: Request, res: Response, next: NextFunction) 
 
   if (os === 'Linux') {
     scriptSetuporiginMetadataContent = fs.readFileSync(
-      path.join(__dirname, '../../scripts/2023-05-11-setup_linux_key.sh'),
+      path.join(__dirname, '../../scripts/2023-05-29-ansysCSPAgentManagerService_setup_linux_key.sh'),
       'utf8'
     );
     scriptSetupAgentContent = fs.readFileSync(
       // path.join(__dirname, "../../scripts/setup_linux.sh"),
-      path.join(__dirname, '../../scripts/2023-05-15-HelloWorldGoOsService_setup_linux.sh'),
+      path.join(__dirname, '../../scripts/2023-05-29-ansysCSPAgentManagerService_setup_linux.sh'),
       'utf8'
     );
     awsInput = {
