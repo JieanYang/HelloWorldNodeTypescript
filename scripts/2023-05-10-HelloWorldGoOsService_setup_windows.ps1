@@ -23,7 +23,7 @@ $env:PATH = $env:PATH + ";" + $env:GOPATH + "\bin"
 Write-Output $env:PATH
 
 $OS_SERVICE_MANAGER_APP_DIR = "$env:GOPATH\agentOsService"
-$AGENT_APP_DIR = "$OS_SERVICE_MANAGER_APP_DIR\helloWorldGoAgent"
+$AGENT_APP_DIR = "$OS_SERVICE_MANAGER_APP_DIR\ansysCSPAgent"
 Write-Output $OS_SERVICE_MANAGER_APP_DIR
 Write-Output $AGENT_APP_DIR
 
@@ -51,9 +51,9 @@ if (Test-Path $OS_SERVICE_MANAGER_APP) {
 }
 go build -o $OS_SERVICE_MANAGER_APP "${OS_SERVICE_MANAGER_APP_DIR}\main.go"
 
-# Build helloWorldGoAgent
-Write-Output "Build helloWorldGoAgent"
-$AGENT_APP = "${AGENT_APP_DIR}\..\helloWorldGoAgentApp.exe"
+# Build ansysCSPAgentApp
+Write-Output "Build ansysCSPAgentApp"
+$AGENT_APP = "${AGENT_APP_DIR}\..\ansysCSPAgentApp.exe"
 if (Test-Path $AGENT_APP) {
     Remove-Item $AGENT_APP
 }

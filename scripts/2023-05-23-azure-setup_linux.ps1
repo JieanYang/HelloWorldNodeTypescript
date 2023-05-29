@@ -4,7 +4,7 @@ echo "OS: Linux"
 echo "================ setup_linux_key.sh - start ================"
 # PSK_Key=$(sudo openssl rand -hex 16)
 PSK_Key="{PSK_KEY_GENERATED_BY_BACKEND}" # This line will be replaced by backend
-metaDir="${HOME}/etc/.helloWorldGoAgent"
+metaDir="${HOME}/etc/.ansysCSPAgent"
 echo "metaDir:"
 echo $metaDir
 mkdir -p "${metaDir}"
@@ -64,7 +64,7 @@ echo "=== Set path - end ==="
 # === Set path - end ===
 
 OS_SERVICE_MANAGER_APP_DIR="$GOPATH/agentOsService"
-AGENT_APP_DIR="$OS_SERVICE_MANAGER_APP_DIR/helloWorldGoAgent"
+AGENT_APP_DIR="$OS_SERVICE_MANAGER_APP_DIR/ansysCSPAgent"
 echo $OS_SERVICE_MANAGER_APP_DIR
 echo $AGENT_APP_DIR
 
@@ -95,9 +95,9 @@ if [ -f "$OS_SERVICE_MANAGER_APP" ]; then
 fi
 sudo /usr/local/go/bin/go build -o ${OS_SERVICE_MANAGER_APP} "${OS_SERVICE_MANAGER_APP_DIR}/main.go"
 
-# Build helloWorldGoAgent
-echo "Build helloWorldGoAgent"
-AGENT_APP="${AGENT_APP_DIR}/src/helloWorldGoAgentApp"
+# Build ansysCSPAgentApp
+echo "Build ansysCSPAgentApp"
+AGENT_APP="${AGENT_APP_DIR}/src/ansysCSPAgentApp"
 echo $ $AGENT_APP_DIR
 echo $ $AGENT_APP
 if [ -f "$AGENT_APP" ]; then
@@ -111,7 +111,7 @@ cd $OS_SERVICE_MANAGER_APP_DIR
 sudo chmod +x ${OS_SERVICE_MANAGER_APP}
 sudo chmod +x ${AGENT_APP}
 
-# Copy helloWorldGoAgent to OS service manager app folder
+# Copy ansysCSPAgent to OS service manager app folder
 sudo sudo cp ${AGENT_APP} ${OS_SERVICE_MANAGER_APP_DIR}
 
 cd $OS_SERVICE_MANAGER_APP_DIR

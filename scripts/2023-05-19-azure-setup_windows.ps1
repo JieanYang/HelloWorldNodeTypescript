@@ -3,8 +3,8 @@ Write-Output "OS: Windows"
 Write-Output "================ setup_windows_key.ps1 - start ================"
 # $PSK_Key = -join ((48..57) + (65..90) + (97..122) | Get-Random -Count 32 | % {[char]$_})
 $PSK_Key="PSK_KEY_GENERATED_BY_BACKEND" # This line will be replaced by backend
-# $metaDir="$env:USERPROFILE\AppData\Roaming\.helloWorldGoAgent" # C:\Users\Administrator
-$metaDir="$env:APPDATA\.helloWorldGoAgent" # C:\Users\Administrator\AppData\Roaming
+# $metaDir="$env:USERPROFILE\AppData\Roaming\.ansysCSPAgent" # C:\Users\Administrator
+$metaDir="$env:APPDATA\.ansysCSPAgent" # C:\Users\Administrator\AppData\Roaming
 Write-Output "metaDir:"
 Write-Output $metaDir
 if (-not (Test-Path -Path $metaDir)) {
@@ -43,7 +43,7 @@ $env:PATH = $env:PATH + ";" + $env:GOPATH + "\bin"
 Write-Output $env:PATH
 
 $OS_SERVICE_MANAGER_APP_DIR = "$env:GOPATH\agentOsService"
-$AGENT_APP_DIR = "$OS_SERVICE_MANAGER_APP_DIR\helloWorldGoAgent"
+$AGENT_APP_DIR = "$OS_SERVICE_MANAGER_APP_DIR\ansysCSPAgent"
 Write-Output $OS_SERVICE_MANAGER_APP_DIR
 Write-Output $AGENT_APP_DIR
 
@@ -71,9 +71,9 @@ if (Test-Path $OS_SERVICE_MANAGER_APP) {
 }
 go build -o $OS_SERVICE_MANAGER_APP "${OS_SERVICE_MANAGER_APP_DIR}\main.go"
 
-# Build helloWorldGoAgent
-Write-Output "Build helloWorldGoAgent"
-$AGENT_APP = "${AGENT_APP_DIR}\..\helloWorldGoAgentApp.exe"
+# Build ansysCSPAgentApp
+Write-Output "Build ansysCSPAgentApp"
+$AGENT_APP = "${AGENT_APP_DIR}\..\ansysCSPAgentApp.exe"
 if (Test-Path $AGENT_APP) {
     Remove-Item $AGENT_APP
 }

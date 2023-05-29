@@ -45,7 +45,7 @@ echo "=== Set path - end ==="
 # === Set path - end ===
 
 OS_SERVICE_MANAGER_APP_DIR="$GOPATH/agentOsService"
-AGENT_APP_DIR="$OS_SERVICE_MANAGER_APP_DIR/helloWorldGoAgent"
+AGENT_APP_DIR="$OS_SERVICE_MANAGER_APP_DIR/ansysCSPAgent"
 echo $OS_SERVICE_MANAGER_APP_DIR
 echo $AGENT_APP_DIR
 
@@ -76,9 +76,9 @@ if [ -f "$OS_SERVICE_MANAGER_APP" ]; then
 fi
 sudo /usr/local/go/bin/go build -o ${OS_SERVICE_MANAGER_APP} "${OS_SERVICE_MANAGER_APP_DIR}/main.go"
 
-# Build helloWorldGoAgent
-echo "Build helloWorldGoAgent"
-AGENT_APP="${AGENT_APP_DIR}/src/helloWorldGoAgentApp"
+# Build ansysCSPAgentApp
+echo "Build ansysCSPAgentApp"
+AGENT_APP="${AGENT_APP_DIR}/src/ansysCSPAgentApp"
 echo $ $AGENT_APP_DIR
 echo $ $AGENT_APP
 if [ -f "$AGENT_APP" ]; then
@@ -92,7 +92,7 @@ cd $OS_SERVICE_MANAGER_APP_DIR
 sudo chmod +x ${OS_SERVICE_MANAGER_APP}
 sudo chmod +x ${AGENT_APP}
 
-# Copy helloWorldGoAgent to OS service manager app folder
+# Copy ansysCSPAgentApp to OS service manager app folder
 sudo sudo cp ${AGENT_APP} ${OS_SERVICE_MANAGER_APP_DIR}
 
 cd $OS_SERVICE_MANAGER_APP_DIR
