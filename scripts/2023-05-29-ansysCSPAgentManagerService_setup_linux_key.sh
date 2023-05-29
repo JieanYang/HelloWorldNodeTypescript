@@ -12,7 +12,7 @@ echo $metaDir
 mkdir -p "${metaDir}"
 
 json="{
-    \"PSK_Key\": \"${PSK_Key}\"
+    \"psk_key\": \"${PSK_Key}\"
 }"
 echo "${json}" > "${metaDir}/original_metadata.json"
 echo "================ setup_linux_key.sh - end ================"
