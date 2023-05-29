@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-ec2": "^3.312.0",
+    "@aws-sdk/client-s3": "^3.341.0",
     "btoa": "^1.2.1",
     "crypto": "^1.0.1",
     "dotenv": "^16.0.3",
