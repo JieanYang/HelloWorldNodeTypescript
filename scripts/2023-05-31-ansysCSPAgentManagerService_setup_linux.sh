@@ -62,6 +62,7 @@ echo $ $OS_SERVICE_MANAGER_APP
 echo $ $AGENT_APP
 # === App path - end ===
 
+# === Download binary files - start ===
 if [ ! -d "$OS_SERVICE_MANAGER_APP_DIR" ]; then
   mkdir -p "$OS_SERVICE_MANAGER_APP_DIR"
   echo "Folder created successfully."
@@ -87,6 +88,7 @@ curl -L "$OS_SERVICE_MANAGER_APP_INSTALL_SERVICE_URL" -o "$OS_SERVICE_MANAGER_AP
 curl -L "$OS_SERVICE_MANAGER_APP_UNINSTALL_SERVICE_URL" -o "$OS_SERVICE_MANAGER_APP_DIR/uninstall_linux.sh"
 curl -L "$OS_SERVICE_MANAGER_APP_SERVICE_CONFIG_URL" -o "$OS_SERVICE_MANAGER_APP_DIR/AnsysCSPAgentManagerService.service"
 curl -L "$AGENT_APP_BINARY_URL" -o "$AGENT_APP"
+# === Download binary files - end ===
 
 # Add +x permission for two binary files
 cd $OS_SERVICE_MANAGER_APP_DIR
