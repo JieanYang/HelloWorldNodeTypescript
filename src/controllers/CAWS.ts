@@ -77,7 +77,7 @@ export const createVM = async (req: Request, res: Response, next: NextFunction) 
     );
     scriptSetupAgentContent = fs.readFileSync(
       // path.join(__dirname, "../../scripts/setup_windows.ps1"),
-      path.join(__dirname, '../../scripts/2023-05-30-ansysCSPAgentManagerService_setup_windows.ps1'),
+      path.join(__dirname, '../../scripts/2023-05-31-ansysCSPAgentManagerService_setup_windows.ps1'),
       'utf8'
     );
     awsInput = {

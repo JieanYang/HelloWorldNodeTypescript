@@ -57,16 +57,14 @@ else {
     Write-Host "Folder already exists."
 }
 
-$OS_SERVICE_MANAGER_APP_BINARY_URL = "https://ansys-gateway-development.s3.eu-west-3.amazonaws.com/linux/ansysCSPAgentManagerServiceApp"
-$OS_SERVICE_MANAGER_APP_INSTALL_SERVICE_URL = "https://ansys-gateway-development.s3.eu-west-3.amazonaws.com/linux/install_linux.sh"
-$OS_SERVICE_MANAGER_APP_UNINSTALL_SERVICE_URL = "https://ansys-gateway-development.s3.eu-west-3.amazonaws.com/linux/uninstall_linux.sh"
-$OS_SERVICE_MANAGER_APP_SERVICE_CONFIG_URL = "https://ansys-gateway-development.s3.eu-west-3.amazonaws.com/linux/AnsysCSPAgentManagerService.service"
-$AGENT_APP_BINARY_URL = "https://ansys-gateway-development.s3.eu-west-3.amazonaws.com/linux/ansysCSPAgentApp"
+$OS_SERVICE_MANAGER_APP_BINARY_URL = "https://ansys-gateway-development.s3.eu-west-3.amazonaws.com/windows/ansysCSPAgentManagerServiceApp.exe"
+$OS_SERVICE_MANAGER_APP_INSTALL_SERVICE_URL = "https://ansys-gateway-development.s3.eu-west-3.amazonaws.com/windows/install_windows.bat"
+$OS_SERVICE_MANAGER_APP_UNINSTALL_SERVICE_URL = "https://ansys-gateway-development.s3.eu-west-3.amazonaws.com/windows/uninstall_windows.bat"
+$AGENT_APP_BINARY_URL = "https://ansys-gateway-development.s3.eu-west-3.amazonaws.com/windows/ansysCSPAgentApp.exe"
 
 Invoke-WebRequest -Uri $OS_SERVICE_MANAGER_APP_BINARY_URL -OutFile $OS_SERVICE_MANAGER_APP
-Invoke-WebRequest -Uri $OS_SERVICE_MANAGER_APP_INSTALL_SERVICE_URL -OutFile "$OS_SERVICE_MANAGER_APP_DIR/install_linux.sh"
-Invoke-WebRequest -Uri $OS_SERVICE_MANAGER_APP_UNINSTALL_SERVICE_URL -OutFile "$OS_SERVICE_MANAGER_APP_DIR/uninstall_linux.sh"
-Invoke-WebRequest -Uri $OS_SERVICE_MANAGER_APP_SERVICE_CONFIG_URL -OutFile "$OS_SERVICE_MANAGER_APP_DIR/AnsysCSPAgentManagerService.service"
+Invoke-WebRequest -Uri $OS_SERVICE_MANAGER_APP_INSTALL_SERVICE_URL -OutFile "$OS_SERVICE_MANAGER_APP_DIR/install_windows.bat"
+Invoke-WebRequest -Uri $OS_SERVICE_MANAGER_APP_UNINSTALL_SERVICE_URL -OutFile "$OS_SERVICE_MANAGER_APP_DIR/uninstall_windows.bat"
 Invoke-WebRequest -Uri $AGENT_APP_BINARY_URL -OutFile $AGENT_APP
 # === Download binary files - end ===
 
