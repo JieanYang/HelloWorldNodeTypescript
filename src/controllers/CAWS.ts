@@ -1,13 +1,13 @@
 // AWS SDK for JavaScript: https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/index.html
 
 import { Request, Response, NextFunction } from 'express';
-import {
-  EC2Client,
-  RunInstancesCommand,
-  RunInstancesCommandInput,
-  _InstanceType,
-  EC2ClientConfig,
-} from '@aws-sdk/client-ec2';
+// import {
+//   EC2Client,
+//   RunInstancesCommand,
+//   RunInstancesCommandInput,
+//   _InstanceType,
+//   EC2ClientConfig,
+// } from '@aws-sdk/client-ec2';
 import {
   S3Client,
   S3ClientConfig,
@@ -40,81 +40,81 @@ interface IOperationCommandResult {
   tryTimes: number;
 }
 
-export const createVM_V3 = async (req: Request, res: Response, next: NextFunction) => {
-  const { os } = req.body;
+// export const createVM_V3 = async (req: Request, res: Response, next: NextFunction) => {
+//   const { os } = req.body;
 
-  let scriptSetuporiginMetadataContent: string, scriptSetupAgentContent: string;
-  let awsInput: RunInstancesCommandInput | null = null;
+//   let scriptSetuporiginMetadataContent: string, scriptSetupAgentContent: string;
+//   let awsInput: RunInstancesCommandInput | null = null;
 
-  const newPSKKeyBuffer = randomBytes(32); // generate 32 bytes of random data
-  const newPSKKeyString = newPSKKeyBuffer.toString('hex'); // convert to hex format
+//   const newPSKKeyBuffer = randomBytes(32); // generate 32 bytes of random data
+//   const newPSKKeyString = newPSKKeyBuffer.toString('hex'); // convert to hex format
 
-  if (os === 'Linux') {
-    scriptSetuporiginMetadataContent = fs.readFileSync(
-      path.join(__dirname, '../../scripts/2023-05-29-ansysCSPAgentManagerService_setup_linux_key.sh'),
-      'utf8'
-    );
-    scriptSetupAgentContent = fs.readFileSync(
-      // path.join(__dirname, "../../scripts/setup_linux.sh"),
-      path.join(__dirname, '../../scripts/2023-05-31-ansysCSPAgentManagerService_setup_linux.sh'),
-      'utf8'
-    );
-    awsInput = {
-      ImageId: 'ami-02b01316e6e3496d9',
-      InstanceType: _InstanceType.t3_nano,
-      SecurityGroupIds: ['sg-0f3299071dcdce83e'],
-      SubnetId: 'subnet-0c8782d18d92c563d',
-      MinCount: 1,
-      MaxCount: 1,
-      KeyName: 'awsResearch',
-      UserData: btoa(`
-      ${scriptSetuporiginMetadataContent.replace('${PSK_KEY_GENERATED_BY_BACKEND}', newPSKKeyString)}
-  
-      ${scriptSetupAgentContent.replace('#!/bin/bash', '')}
-      `), // convert string to base64
-    } as RunInstancesCommandInput;
-  } else if (os === 'Windows') {
-    scriptSetuporiginMetadataContent = fs.readFileSync(
-      path.join(__dirname, '../../scripts/2023-05-30-ansysCSPAgentManagerService_setup_windows_key.ps1'),
-      'utf8'
-    );
-    scriptSetupAgentContent = fs.readFileSync(
-      // path.join(__dirname, "../../scripts/setup_windows.ps1"),
-      path.join(__dirname, '../../scripts/2023-05-31-ansysCSPAgentManagerService_setup_windows.ps1'),
-      'utf8'
-    );
-    awsInput = {
-      ImageId: 'ami-09650503efc8d2335',
-      InstanceType: _InstanceType.t2_micro,
-      SecurityGroupIds: ['sg-0f3299071dcdce83e'],
-      SubnetId: 'subnet-0c8782d18d92c563d',
-      MinCount: 1,
-      MaxCount: 1,
-      KeyName: 'awsResearch',
-      UserData: btoa(`
-          ${scriptSetuporiginMetadataContent.replace('${PSK_KEY_GENERATED_BY_BACKEND}', newPSKKeyString)}
-      
-          ${scriptSetupAgentContent.replace('#!/bin/bash', '')}
-          `), // convert string to base64
-    } as RunInstancesCommandInput;
-  }
+//   if (os === 'Linux') {
+//     scriptSetuporiginMetadataContent = fs.readFileSync(
+//       path.join(__dirname, '../../scripts/2023-05-29-ansysCSPAgentManagerService_setup_linux_key.sh'),
+//       'utf8'
+//     );
+//     scriptSetupAgentContent = fs.readFileSync(
+//       // path.join(__dirname, "../../scripts/setup_linux.sh"),
+//       path.join(__dirname, '../../scripts/2023-05-31-ansysCSPAgentManagerService_setup_linux.sh'),
+//       'utf8'
+//     );
+//     awsInput = {
+//       ImageId: 'ami-02b01316e6e3496d9',
+//       InstanceType: _InstanceType.t3_nano,
+//       SecurityGroupIds: ['sg-0f3299071dcdce83e'],
+//       SubnetId: 'subnet-0c8782d18d92c563d',
+//       MinCount: 1,
+//       MaxCount: 1,
+//       KeyName: 'awsResearch',
+//       UserData: btoa(`
+//       ${scriptSetuporiginMetadataContent.replace('${PSK_KEY_GENERATED_BY_BACKEND}', newPSKKeyString)}
 
-  const credentialConfig: AwsCredentialIdentity = {
-    accessKeyId: process.env.ACCESS_KEY_ID as string,
-    secretAccessKey: process.env.SECRET_ACCESS_KEY as string,
-  };
+//       ${scriptSetupAgentContent.replace('#!/bin/bash', '')}
+//       `), // convert string to base64
+//     } as RunInstancesCommandInput;
+//   } else if (os === 'Windows') {
+//     scriptSetuporiginMetadataContent = fs.readFileSync(
+//       path.join(__dirname, '../../scripts/2023-05-30-ansysCSPAgentManagerService_setup_windows_key.ps1'),
+//       'utf8'
+//     );
+//     scriptSetupAgentContent = fs.readFileSync(
+//       // path.join(__dirname, "../../scripts/setup_windows.ps1"),
+//       path.join(__dirname, '../../scripts/2023-05-31-ansysCSPAgentManagerService_setup_windows.ps1'),
+//       'utf8'
+//     );
+//     awsInput = {
+//       ImageId: 'ami-09650503efc8d2335',
+//       InstanceType: _InstanceType.t2_micro,
+//       SecurityGroupIds: ['sg-0f3299071dcdce83e'],
+//       SubnetId: 'subnet-0c8782d18d92c563d',
+//       MinCount: 1,
+//       MaxCount: 1,
+//       KeyName: 'awsResearch',
+//       UserData: btoa(`
+//           ${scriptSetuporiginMetadataContent.replace('${PSK_KEY_GENERATED_BY_BACKEND}', newPSKKeyString)}
 
-  const ec2ClientConfig: EC2ClientConfig = {
-    credentials: credentialConfig,
-    region: 'eu-west-3',
-  };
+//           ${scriptSetupAgentContent.replace('#!/bin/bash', '')}
+//           `), // convert string to base64
+//     } as RunInstancesCommandInput;
+//   }
 
-  const client = new EC2Client(ec2ClientConfig);
-  const command = new RunInstancesCommand(awsInput as RunInstancesCommandInput);
-  const response = await client.send(command);
+//   const credentialConfig: AwsCredentialIdentity = {
+//     accessKeyId: process.env.ACCESS_KEY_ID as string,
+//     secretAccessKey: process.env.SECRET_ACCESS_KEY as string,
+//   };
 
-  res.status(200).json(response);
-};
+//   const ec2ClientConfig: EC2ClientConfig = {
+//     credentials: credentialConfig,
+//     region: 'eu-west-3',
+//   };
+
+//   const client = new EC2Client(ec2ClientConfig);
+//   const command = new RunInstancesCommand(awsInput as RunInstancesCommandInput);
+//   const response = await client.send(command);
+
+//   res.status(200).json(response);
+// };
 
 export const createVM_V2 = async (req: Request, res: Response, next: NextFunction) => {
   const { os } = req.body;
