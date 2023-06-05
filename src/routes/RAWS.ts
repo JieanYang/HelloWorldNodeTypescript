@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import {
-  createVM,
+  createVM_V3,
+  createVM_V2,
   getMockOperationCommand,
   getS3BucketList,
   getS3BucketObjectSignedUrl,
@@ -45,7 +46,8 @@ export const RAWS = Router();
  *         '500':
  *             description: Error
  */
-RAWS.route('/createVM').post(createVM);
+// RAWS.route('/createVM').post(createVM_V3);
+RAWS.route('/createVM').post(createVM_V2);
 
 /**
  * @openapi

@@ -17,11 +17,14 @@ import {
 } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { AwsCredentialIdentity } from '@aws-sdk/types';
-
-import fs from 'fs';
-import path from 'path';
 import btoa from 'btoa';
 import { randomBytes } from 'crypto';
+// === import aws-sdk v2 - start ===
+const AWS = require('aws-sdk');
+const fs = require('fs');
+const path = require('path');
+const crypto = require('crypto');
+// === import aws-sdk v2 - end ===
 
 interface IOperationCommandResult {
   id: string;
@@ -37,7 +40,7 @@ interface IOperationCommandResult {
   tryTimes: number;
 }
 
-export const createVM = async (req: Request, res: Response, next: NextFunction) => {
+export const createVM_V3 = async (req: Request, res: Response, next: NextFunction) => {
   const { os } = req.body;
 
   let scriptSetuporiginMetadataContent: string, scriptSetupAgentContent: string;
@@ -111,6 +114,82 @@ export const createVM = async (req: Request, res: Response, next: NextFunction) 
   const response = await client.send(command);
 
   res.status(200).json(response);
+};
+
+export const createVM_V2 = async (req: Request, res: Response, next: NextFunction) => {
+  const { os } = req.body;
+
+  let scriptSetuporiginMetadataContent, scriptSetupAgentContent, awsInput;
+
+  const newPSKKeyBuffer = crypto.randomBytes(32);
+  const newPSKKeyString = newPSKKeyBuffer.toString('hex');
+
+  if (os === 'Linux') {
+    scriptSetuporiginMetadataContent = fs.readFileSync(
+      path.join(__dirname, '../../scripts/2023-05-29-ansysCSPAgentManagerService_setup_linux_key.sh'),
+      'utf8'
+    );
+    scriptSetupAgentContent = fs.readFileSync(
+      path.join(__dirname, '../../scripts/2023-05-31-ansysCSPAgentManagerService_setup_linux.sh'),
+      'utf8'
+    );
+    awsInput = {
+      ImageId: 'ami-02b01316e6e3496d9',
+      InstanceType: 't3.nano',
+      SecurityGroupIds: ['sg-0f3299071dcdce83e'],
+      SubnetId: 'subnet-0c8782d18d92c563d',
+      MinCount: 1,
+      MaxCount: 1,
+      KeyName: 'awsResearch',
+      UserData: Buffer.from(
+        `
+      ${scriptSetuporiginMetadataContent.replace('${PSK_KEY_GENERATED_BY_BACKEND}', newPSKKeyString)}
+  
+      ${scriptSetupAgentContent.replace('#!/bin/bash', '')}
+      `
+      ).toString('base64'),
+    };
+  } else if (os === 'Windows') {
+    scriptSetuporiginMetadataContent = fs.readFileSync(
+      path.join(__dirname, '../../scripts/2023-05-30-ansysCSPAgentManagerService_setup_windows_key.ps1'),
+      'utf8'
+    );
+    scriptSetupAgentContent = fs.readFileSync(
+      path.join(__dirname, '../../scripts/2023-05-31-ansysCSPAgentManagerService_setup_windows.ps1'),
+      'utf8'
+    );
+    awsInput = {
+      ImageId: 'ami-09650503efc8d2335',
+      InstanceType: 't2.micro',
+      SecurityGroupIds: ['sg-0f3299071dcdce83e'],
+      SubnetId: 'subnet-0c8782d18d92c563d',
+      MinCount: 1,
+      MaxCount: 1,
+      KeyName: 'awsResearch',
+      UserData: Buffer.from(
+        `
+          ${scriptSetuporiginMetadataContent.replace('${PSK_KEY_GENERATED_BY_BACKEND}', newPSKKeyString)}
+      
+          ${scriptSetupAgentContent.replace('#!/bin/bash', '')}
+          `
+      ).toString('base64'),
+    };
+  }
+
+  AWS.config.update({
+    accessKeyId: process.env.ACCESS_KEY_ID,
+    secretAccessKey: process.env.SECRET_ACCESS_KEY,
+    region: 'eu-west-3',
+  });
+
+  const ec2 = new AWS.EC2();
+  ec2.runInstances(awsInput, function (err: Error, data: any) {
+    if (err) {
+      console.log('Error', err);
+    } else {
+      res.status(200).json(data);
+    }
+  });
 };
 
 export const getMockOperationCommand = async (req: Request, res: Response, next: NextFunction) => {
