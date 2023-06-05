@@ -5,7 +5,7 @@ import {
   getMockOperationCommand,
   // getS3BucketList_V3,
   getS3BucketObjectSignedUrl_V2,
-  getS3BucketObjectSignedUrl_V3,
+  // getS3BucketObjectSignedUrl_V3,
   receiveOperationCommandResult,
 } from '../controllers/CAWS';
 

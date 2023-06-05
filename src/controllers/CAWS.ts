@@ -1,6 +1,7 @@
 // AWS SDK for JavaScript: https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/index.html
 
 import { Request, Response, NextFunction } from 'express';
+// === import aws-sdk v3 - start ===
 // import {
 //   EC2Client,
 //   RunInstancesCommand,
@@ -8,17 +9,18 @@ import { Request, Response, NextFunction } from 'express';
 //   _InstanceType,
 //   EC2ClientConfig,
 // } from '@aws-sdk/client-ec2';
-import {
-  S3Client,
-  S3ClientConfig,
-  ListBucketsCommand,
-  GetObjectCommand,
-  GetObjectCommandInput,
-} from '@aws-sdk/client-s3';
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { AwsCredentialIdentity } from '@aws-sdk/types';
-import btoa from 'btoa';
-import { randomBytes } from 'crypto';
+// import {
+//   S3Client,
+//   S3ClientConfig,
+//   ListBucketsCommand,
+//   GetObjectCommand,
+//   GetObjectCommandInput,
+// } from '@aws-sdk/client-s3';
+// import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+// import { AwsCredentialIdentity } from '@aws-sdk/types';
+// import btoa from 'btoa';
+// import { randomBytes } from 'crypto';
+// === import aws-sdk v3 - end ===
 // === import aws-sdk v2 - start ===
 const AWS = require('aws-sdk');
 const fs = require('fs');
@@ -248,27 +250,27 @@ export const receiveOperationCommandResult = async (req: Request, res: Response,
 //   res.status(200).send({ Results: response });
 // };
 
-export const getS3BucketObjectSignedUrl_V3 = async (req: Request, res: Response, next: NextFunction) => {
-  const credentialConfig: AwsCredentialIdentity = {
-    accessKeyId: process.env.ACCESS_KEY_ID as string,
-    secretAccessKey: process.env.SECRET_ACCESS_KEY as string,
-  };
+// export const getS3BucketObjectSignedUrl_V3 = async (req: Request, res: Response, next: NextFunction) => {
+//   const credentialConfig: AwsCredentialIdentity = {
+//     accessKeyId: process.env.ACCESS_KEY_ID as string,
+//     secretAccessKey: process.env.SECRET_ACCESS_KEY as string,
+//   };
 
-  const s3ClientConfig: S3ClientConfig = {
-    credentials: credentialConfig,
-  };
+//   const s3ClientConfig: S3ClientConfig = {
+//     credentials: credentialConfig,
+//   };
 
-  const s3Client = new S3Client(s3ClientConfig);
+//   const s3Client = new S3Client(s3ClientConfig);
 
-  const input: GetObjectCommandInput = {
-    Bucket: 'ansys-gateway-development-private',
-    Key: 'first_script.sh',
-  };
-  const command = new GetObjectCommand(input);
-  const url = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
+//   const input: GetObjectCommandInput = {
+//     Bucket: 'ansys-gateway-development-private',
+//     Key: 'first_script.sh',
+//   };
+//   const command = new GetObjectCommand(input);
+//   const url = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
 
-  res.status(200).send({ Results: url });
-};
+//   res.status(200).send({ Results: url });
+// };
 
 export const getS3BucketObjectSignedUrl_V2 = async (req: Request, res: Response, next: NextFunction) => {
   AWS.config.update({
