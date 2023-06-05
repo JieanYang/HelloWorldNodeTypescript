@@ -3,8 +3,9 @@ import {
   // createVM_V3,
   createVM_V2,
   getMockOperationCommand,
-  getS3BucketList,
-  getS3BucketObjectSignedUrl,
+  // getS3BucketList_V3,
+  getS3BucketObjectSignedUrl_V2,
+  getS3BucketObjectSignedUrl_V3,
   receiveOperationCommandResult,
 } from '../controllers/CAWS';
 
@@ -65,7 +66,7 @@ RAWS.route('/createVM').post(createVM_V2);
  *             description: Error
  */
 
-RAWS.route('/getS3BucketList').get(getS3BucketList);
+// RAWS.route('/getS3BucketList').get(getS3BucketList_V3);
 
 /**
  * @openapi
@@ -92,4 +93,4 @@ RAWS.route('/getS3BucketList').get(getS3BucketList);
  *             description: Error
  */
 
-RAWS.route('/getS3BucketObjectSignedUrl').post(getS3BucketObjectSignedUrl);
+RAWS.route('/getS3BucketObjectSignedUrl').post(getS3BucketObjectSignedUrl_V2);

@@ -227,28 +227,28 @@ export const receiveOperationCommandResult = async (req: Request, res: Response,
   res.status(200).send('OK');
 };
 
-export const getS3BucketList = async (req: Request, res: Response, next: NextFunction) => {
-  const credentialConfig: AwsCredentialIdentity = {
-    accessKeyId: process.env.ACCESS_KEY_ID as string,
-    secretAccessKey: process.env.SECRET_ACCESS_KEY as string,
-  };
+// export const getS3BucketList_V3 = async (req: Request, res: Response, next: NextFunction) => {
+//   const credentialConfig: AwsCredentialIdentity = {
+//     accessKeyId: process.env.ACCESS_KEY_ID as string,
+//     secretAccessKey: process.env.SECRET_ACCESS_KEY as string,
+//   };
 
-  const s3ClientConfig: S3ClientConfig = {
-    credentials: credentialConfig,
-  };
+//   const s3ClientConfig: S3ClientConfig = {
+//     credentials: credentialConfig,
+//   };
 
-  const s3Client = new S3Client(s3ClientConfig);
+//   const s3Client = new S3Client(s3ClientConfig);
 
-  const command = new ListBucketsCommand({});
+//   const command = new ListBucketsCommand({});
 
-  const response = await s3Client.send(command);
+//   const response = await s3Client.send(command);
 
-  console.log('response', response);
+//   console.log('response', response);
 
-  res.status(200).send({ Results: response });
-};
+//   res.status(200).send({ Results: response });
+// };
 
-export const getS3BucketObjectSignedUrl = async (req: Request, res: Response, next: NextFunction) => {
+export const getS3BucketObjectSignedUrl_V3 = async (req: Request, res: Response, next: NextFunction) => {
   const credentialConfig: AwsCredentialIdentity = {
     accessKeyId: process.env.ACCESS_KEY_ID as string,
     secretAccessKey: process.env.SECRET_ACCESS_KEY as string,
@@ -268,4 +268,28 @@ export const getS3BucketObjectSignedUrl = async (req: Request, res: Response, ne
   const url = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
 
   res.status(200).send({ Results: url });
+};
+
+export const getS3BucketObjectSignedUrl_V2 = async (req: Request, res: Response, next: NextFunction) => {
+  AWS.config.update({
+    accessKeyId: process.env.ACCESS_KEY_ID,
+    secretAccessKey: process.env.SECRET_ACCESS_KEY,
+    region: 'eu-west-3',
+    signatureVersion: 'v4',
+  });
+
+  const s3 = new AWS.S3();
+  const params = {
+    Bucket: 'ansys-gateway-development-private',
+    Key: 'first_script.sh',
+    Expires: 3600,
+  };
+
+  try {
+    const url = s3.getSignedUrl('getObject', params);
+    res.status(200).json({ Results: url });
+  } catch (err) {
+    console.log('Error getting presigned url from AWS S3');
+    res.status(500).json({ error: 'Error getting presigned url from AWS S3', message: err });
+  }
 };
