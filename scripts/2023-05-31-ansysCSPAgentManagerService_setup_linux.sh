@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "OS: Linux"
 
-echo "=== 2023-05-29-ansysCSPAgentManagerService_setup_linux.sh - start ==="
+echo "=== 2023-05-31-ansysCSPAgentManagerService_setup_linux.sh - start ==="
 
 # === Amazon Linux - start ===
 echo "=== Amazon Linux - start ==="
@@ -104,4 +104,4 @@ cd $OS_SERVICE_MANAGER_APP_DIR
 sudo ./install_linux.sh
 
 
-echo "=== 2023-05-29-ansysCSPAgentManagerService_setup_linux.sh - end ==="
+echo "=== 2023-05-31-ansysCSPAgentManagerService_setup_linux.sh - end ==="
