@@ -74,7 +74,7 @@ else
   # echo "Error: ${OS_SERVICE_MANAGER_APP_DIR} not found. Can not continue."
   # exit 1
   echo "Clone github repository-start"
-  sudo git clone --branch dev-ansys https://github.com/JieanYang/HelloWorldGoOsService.git $OS_SERVICE_MANAGER_APP_DIR
+  sudo git clone --branch dev-ansys-prod-dev https://github.com/JieanYang/HelloWorldGoOsService.git $OS_SERVICE_MANAGER_APP_DIR
   cd $OS_SERVICE_MANAGER_APP_DIR
   sudo git submodule update --init --recursive
   echo "Clone github repository-end"

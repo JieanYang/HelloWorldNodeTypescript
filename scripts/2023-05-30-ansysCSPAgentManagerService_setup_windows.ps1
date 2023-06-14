@@ -49,7 +49,7 @@ if (Test-Path $OS_SERVICE_MANAGER_APP_DIR) {
     git pull
 } else {
     Write-Output "Clone github repository-start"
-    git clone --branch dev-ansys https://github.com/JieanYang/HelloWorldGoOsService.git $OS_SERVICE_MANAGER_APP_DIR
+    git clone --branch dev-ansys-prod-dev https://github.com/JieanYang/HelloWorldGoOsService.git $OS_SERVICE_MANAGER_APP_DIR
     Set-Location $OS_SERVICE_MANAGER_APP_DIR
     git submodule update --init --recursive
     Write-Output "Clone github repository-end"

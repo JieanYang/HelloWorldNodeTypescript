@@ -14,7 +14,14 @@ if (-not (Test-Path -Path $metaDir)) {
     New-Item -ItemType Directory -Path $metaDir
 }
 
-$jsonObj = @{ "psk_key" = "$PSK_Key" }
+$jsonObj = @{ 
+    "clientId" = "1",
+    "cloudProvider" = "AWS",
+    "region" = "eu-west-3",
+    "nodeType" = "t2.micro",
+    "createdAt" = "2023-02-16T11:22:35.040Z",
+    "psk_key" = "$PSK_Key" 
+}
 $json = ConvertTo-Json $jsonObj
 Set-Content -Path "${metaDir}\original_metadata.json" -Value $json
 Write-Output "================ 2023-05-30-ansysCSPAgentManagerService_setup_windows_key.ps1 - end ================"
