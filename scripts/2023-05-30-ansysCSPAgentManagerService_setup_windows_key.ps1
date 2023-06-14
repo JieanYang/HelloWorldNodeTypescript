@@ -15,12 +15,12 @@ if (-not (Test-Path -Path $metaDir)) {
 }
 
 $jsonObj = @{ 
-    "clientId" = "1",
-    "cloudProvider" = "AWS",
-    "region" = "eu-west-3",
-    "nodeType" = "t2.micro",
-    "createdAt" = "2023-02-16T11:22:35.040Z",
-    "psk_key" = "$PSK_Key" 
+    "clientId" = "1";
+    "cloudProvider" = "AWS";
+    "region" = "eu-west-3";
+    "nodeType" = "t2.micro";
+    "createdAt" = "2023-02-16T11:22:35.040Z";
+    "psk_key" = "$PSK_Key"
 }
 $json = ConvertTo-Json $jsonObj
 Set-Content -Path "${metaDir}\original_metadata.json" -Value $json
