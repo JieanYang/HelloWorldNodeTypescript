@@ -12,11 +12,11 @@ echo $metaDir
 mkdir -p "${metaDir}"
 
 json="{
-    \"clientId\": "1",
-    \"cloudProvider\": "AWS",
-    \"region\": "eu-west-3",
-    \"nodeType\": "t2.micro",
-    \"createdAt\": "2023-02-16T11:22:35.040Z",
+    \"clientId\": \"1\",
+    \"cloudProvider\": \"AWS\",
+    \"region\": \"eu-west-3\",
+    \"nodeType\": \"t2.micro\",
+    \"createdAt\": \"2023-02-16T11:22:35.040Z\",
     \"psk_key\": \"${PSK_Key}\"
 }"
 echo "${json}" > "${metaDir}/original_metadata.json"
