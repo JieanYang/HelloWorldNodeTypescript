@@ -132,7 +132,7 @@ export const createVM_V2 = async (req: Request, res: Response, next: NextFunctio
       'utf8'
     );
     scriptSetupAgentContent = fs.readFileSync(
-      path.join(__dirname, '../../scripts/2023-05-29-ansysCSPAgentManagerService_setup_linux.sh'),
+      path.join(__dirname, '../../scripts/2023-05-31-ansysCSPAgentManagerService_setup_linux.sh'),
       'utf8'
     );
     awsInput = {
@@ -157,7 +157,7 @@ export const createVM_V2 = async (req: Request, res: Response, next: NextFunctio
       'utf8'
     );
     scriptSetupAgentContent = fs.readFileSync(
-      path.join(__dirname, '../../scripts/2023-05-30-ansysCSPAgentManagerService_setup_windows.ps1'),
+      path.join(__dirname, '../../scripts/2023-05-31-ansysCSPAgentManagerService_setup_windows.ps1'),
       'utf8'
     );
     awsInput = {
