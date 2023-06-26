@@ -195,6 +195,7 @@ export const createVM_V2 = async (req: Request, res: Response, next: NextFunctio
 };
 
 export const getMockOperationCommand = async (req: Request, res: Response, next: NextFunction) => {
+  console.log('get mock operation command');
   // This line will be the codes to get the script form locale, remote like S3 bucket or payload service in the future
   const scriptContent = fs.readFileSync(
     // OS - Linux scripts
@@ -223,6 +224,7 @@ export const getMockOperationCommand = async (req: Request, res: Response, next:
 };
 
 export const receiveOperationCommandResult = async (req: Request, res: Response, next: NextFunction) => {
+  console.log('receive operation command result');
   const {} = req.body as { result: IOperationCommandResult };
   console.log('req.body', req.body);
 

@@ -49,7 +49,7 @@ app.use(`${prefix}/api-docs`, swaggerUi.setup(swaggerDocs));
 
 app.use(prefix, RIndex);
 app.use(`${prefix}/aws`, RAWS);
-app.use(`${prefix}/backend`, RBackend);
+app.use(`${prefix}`, RBackend);
 
 // ================== Get info about the OS - start ==================
 app.get(`${prefix}/os`, (req: Request, res: Response, next: NextFunction) => {

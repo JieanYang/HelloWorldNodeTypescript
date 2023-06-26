@@ -12,7 +12,7 @@ export const RBackend = Router();
 
 /**
  * @openapi
- * /backend/getMockOperationCommand:
+ * /v2/agent/getOperationCommand:
  *  get:
  *      description: Get new command from backend
  *      tags:
@@ -25,11 +25,11 @@ export const RBackend = Router();
  *          '500':
  *              description: Error
  */
-RBackend.route('/getMockOperationCommand').get(getMockOperationCommand);
+RBackend.route('/v2/agent/getOperationCommand').get(getMockOperationCommand);
 
 /**
  * @openapi
- * /backend/receiveOperationCommandResult:
+ * /v2/agent/receiveOperationCommandResult:
  *  post:
  *     description: Receive operation command result from backend
  *     tags:
@@ -72,4 +72,4 @@ RBackend.route('/getMockOperationCommand').get(getMockOperationCommand);
  *         '500':
  *             description: Error
  */
-RBackend.route('/receiveOperationCommandResult').post(receiveOperationCommandResult);
+RBackend.route('/v2/agent/receiveOperationCommandResult').post(receiveOperationCommandResult);
